@@ -1,0 +1,255 @@
+{% extends 'master.html' %}
+
+{% block title %}Utilisateurs{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class='section-block'>
+            <a href="{% url 'authentication:create' %}" class="button button-gradient add-user"><i class="flaticon-add-user"></i> {% if  user.is_super%} Ajouter un admistrateur{% else %}Ajouter un utilisateur{% endif %} </a>
+        </div>
+        
+
+        <div class="card">
+
+            {% comment %} Table {% endcomment %}
+
+            {% comment %} Section super admin de site {% endcomment %}
+            {% if user.is_super %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Statut</th>
+                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Contact</th>
+                        <th>Site name</th>
+                        
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun compte utilisateur
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for account in accounts %}
+                    <tr>
+
+                        
+                            
+                        <td class="status-lock-unlock">
+                            <form method="POST" class="form-set-active-or-inactive">
+                            {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ account.pk }}">
+                                {% if account.is_active %}
+                            <a data-set-status-inactive href="{% url 'authentication:set_user_inactive' %}" class="button button-small button-ouline-danger"><i class="flaticon-lock"></i></a>
+                            {% else %}
+                            <a data-set-status-active href="{% url 'authentication:set_user_active' %}" class="button button-small button-ouline-success"><i class="flaticon-lock-1"></i></a>
+                            {% endif %}
+                            </form>
+                        </td>
+                           
+                            
+                        {% if account.is_active %}
+                        
+                        <td class="status status-active"><span></span> actif</td>
+                        {% else %}
+                        
+                        <td class="status status-inactive"><span></span> inactif</td>
+                        {% endif %}
+                       
+
+                        <td>
+                            {{ account.email }}
+                        </td>
+                        
+                        <td>{{ account.user.first_name | upper }}</td>
+
+                        <td>{{ account.user.last_name }}</td>
+
+                        <td>{{ account.user.contact }}</td>
+
+                        {% if sites %}
+
+                            {% for site in sites %}
+
+                                {% if site.site_code == account.user.site_code %}
+                                    <td>{{ site.site_name }}</td>
+                                {% else %}
+                                {% endif %}
+                            
+                            {% endfor %}
+                            
+                            
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+
+                        
+                       
+                        <td class="action">
+                            <span class='action-menu'>
+                                <i class="flaticon-menu"></i>
+                            </span>
+
+                            <ul class="action-nav-menu">
+                            <form action="" method="POST" class="form-manage-user">
+                                {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ account.pk }}">
+                                {% comment %} <li><a class="show-user" href="{% url 'authentication:show' pk=user.pk %}"><i class="flaticon-job"></i> afficher</a></li> {% endcomment %}
+                                {% comment %} <li><a class="edit-user" href=""><i class="flaticon-file"></i> editer</a></li> {% endcomment %}
+                                
+                                <li><a class="delete-user" href="{% url 'authentication:delete' %}"><i class="flaticon-trash"></i> supprimer</a></li>
+
+                            </form>
+                            </ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    
+
+                    {% endif %}
+                </tbody>
+            </table>
+
+            
+            {% comment %} Section administrateur de site {% endcomment %}
+            {% else %}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Statut</th>
+                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Contact</th>            
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun compte utilisateur
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for account in accounts %}
+                    <tr>
+
+                        
+                            
+                        <td class="status-lock-unlock">
+                            <form method="POST" class="form-set-active-or-inactive">
+                            {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ account.account.pk }}">
+                                {% if account.account.is_active %}
+                            <a data-set-status-inactive href="{% url 'authentication:set_user_inactive' %}" class="button button-small button-ouline-danger"><i class="flaticon-lock"></i></a>
+                            {% else %}
+                            <a data-set-status-active href="{% url 'authentication:set_user_active' %}" class="button button-small button-ouline-success"><i class="flaticon-lock-1"></i></a>
+                            {% endif %}
+                            </form>
+                        </td>
+                           
+                            
+                        {% if account.account.is_active %}
+                        
+                        <td class="status status-active"><span></span> actif</td>
+                        {% else %}
+                        
+                        <td class="status status-inactive"><span></span> inactif</td>
+                        {% endif %}
+                       
+
+                        <td>
+                            {{ account.account.email }}
+                        </td>
+                        
+                        <td>{{ account.first_name | upper }}</td>
+
+                        <td>{{ account.last_name }}</td>
+
+                        <td>{{ account.contact }}</td>
+
+                        <td class="action">
+                            <span class='action-menu'>
+                                <i class="flaticon-menu"></i>
+                            </span>
+
+                            <ul class="action-nav-menu">
+                            <form action="" method="POST" class="form-manage-user">
+                                {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ account.account.pk }}">
+                                {% comment %} <li><a class="show-user" href="{% url 'authentication:show' pk=account.account.pk %}"><i class="flaticon-job"></i> afficher</a></li> {% endcomment %}
+                                {% comment %} <li><a class="edit-user" href=""><i class="flaticon-file"></i> editer</a></li> {% endcomment %}
+                                
+                                <li><a class="delete-user" href="{% url 'authentication:delete' %}"><i class="flaticon-trash"></i> supprimer</a></li>
+
+                            </form>
+                            </ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    
+
+                    {% endif %}
+                </tbody>
+            </table>
+
+            {% endif %}
+
+        </div>
+    </section>
+
+    <div class="modal" role="dialog" id="modal-show-user">
+        <div class="modal-content">
+            <span class="modal-close"><i class="flaticon-cancel"></i></span>
+            <div class="modal-header">
+                <h2 class="modal-title">Information de l'utilisateur</h2>
+            </div>
+            
+            <div class="modal-body">
+
+                <ul class="modal-group">
+                    <li>
+                        <span class="left">Email</span>
+                        <span class="right" data-user-email>example@email.com</span>
+                    </li>
+
+                     <li>
+                        <span class="left">Nom</span>
+                        <span class="right" data-user-firstName>Kadjo</span>
+                    </li>
+
+                     <li>
+                        <span class="left">Prénoms</span>
+                        <span class="right" data-user-lastName>Kouman Aka Sylvain</span>
+                    </li>
+
+                    <li>
+                        <span class="left">Contact</span>
+                        <span class="right" data-user-contact>Kouman Aka Sylvain</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="modal-footer">
+               <a href="" class="button button-success"><i class="flaticon-file"></i> Modifier</a>
+               <a href="" class="button button-danger"><i class="flaticon-trash"></i> Supprimer</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

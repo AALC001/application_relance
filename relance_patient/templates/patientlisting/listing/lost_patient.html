@@ -1,0 +1,111 @@
+{% extends 'master.html' %}
+
+{% block title %}Listing des perdu de vues{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+
+
+        <div class="d-flex flex-jcb flex-aic">
+        <div class='section-block'>
+
+            <form method="GET" action="" class="ml-4 d-flex flex-jcb flex-aic">
+              <div class="form-group">
+                    <label for="type_losted">Type de perdus de vues</label>
+                    <select name="type_losted" id="type_losted" class="form-control">
+                        <option value="">Sélectionner le type</option>
+                        {% for type_lost in type_lost_patient %}
+                            <option value="{{type_lost}}">{{ type_lost }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+               
+                <div class="form-group ml-4">
+                    <label for="">&nbsp;</label>
+                    <button type="submit" class="button button-gradient"><i class="flaticon-shuffle"></i> Générer</button>
+                </div>
+                
+            </form>
+     
+        </div>
+
+        
+        <div class="div">
+            <a href="{% url 'patientlisting:pl_lost_rdv' %}" class="button button-gradient"><i class="las la-undo-alt"></i> Réinitialiser</a>
+            {% if page_obj %}
+            <a href="{% url 'patientlisting:pl_export_lost_listing' %}" class="ml-4 button button-gradient"><i class="flaticon-share"></i> Exporter</a>
+             {% endif %}
+        </div>
+   
+    </div>
+
+
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Contact</th>
+                        <th>Motif</th>
+                        <th>Date RDV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if not page_obj %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun listing de perdus de vues
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for rdv in page_obj %}
+                    <tr>
+
+                        <td>{{ rdv.patient_code }}</td>
+
+                        <td>{{ rdv.first_name | upper }}</td>
+
+                        <td>{{ rdv.last_name | upper }}</td>
+
+                        <td>{{ rdv.contact }}</td>
+
+                        {% if rdv.reason == 5096 %}
+                            <td>ARV</td>
+                        {% elif rdv.reason == 105040 %}
+                            <td>CLINIQUE</td>
+                        {% endif %}
+
+                        <td>{{ rdv.date_rdv | date }}</td>
+
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+         <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a class="button button-gradient" href="?type_losted={{ request.GET.type_losted }}&page=1"><i class="las la-angle-double-left"></i></a>
+                    <a class="button button-gradient" href="?type_losted={{ request.GET.type_losted }}&page={{ page_obj.previous_page_number }}"><i class="las la-angle-left"></i></a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a class="button button-gradient" href="?type_losted={{ request.GET.type_losted }}&page={{ page_obj.next_page_number }}"><i class="las la-angle-right"></i></a>
+                    <a class="button button-gradient" href="?type_losted={{ request.GET.type_losted }}&page={{ page_obj.paginator.num_pages }}"><i class="las la-angle-double-right"></i></a>
+                {% endif %}
+            </span>
+        </div>
+    </section>
+
+{% endblock content %}

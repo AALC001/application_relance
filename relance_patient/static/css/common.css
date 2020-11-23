@@ -1,0 +1,102 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--ff);
+    font-size: 1.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+    color: var(--dark-color);
+    height: 100vh;
+    background-color: var(--light-color);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-image: url('/static/images/app-content/bg-login.png');
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+[class^="flaticon-"]::before, [class*=" flaticon-"]::before, [class^="flaticon-"]::after, [class*=" flaticon-"]::after {
+    margin-left: 0px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.container {
+    width: 90%;
+    max-width: 1441px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: #fff;
+    box-shadow: var(--bs-medium);
+    border-radius: var(--br-small);
+    padding: 2rem;
+}
+
+.card-content {
+    max-height: 576px;
+    height: 100%;
+}
+
+#button-login{
+    margin-top: 2rem;
+}
+
+input {
+    font-family: var(--ff);
+    font-size: 1.5rem;
+}
+
+::placeholder {
+    color: #ccc;
+    font-size: 1.5rem;
+}
+
+.section__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.link {
+    text-decoration: underline;
+    display: inline-block;
+    transition: all .2s;
+}
+
+.link:hover {
+    opacity: .8;
+    text-decoration: none;
+}
+
+.link-primary {
+    color: var(--primary-color);
+}
+
+.icon-big[class^="flaticon-"]::before, 
+[class*=" flaticon-"]::before, 
+[class^="flaticon-"]::after, 
+[class*=" flaticon-"]::after {
+    font-size: 4rem!important;
+}

@@ -1,0 +1,25 @@
+@import './font.css';
+@import './variable.css';
+@import './utils.css';
+@import './common.css';
+@import './loader.css';
+@import './grid.css';
+@import './form.css';
+@import './modal.css';
+@import './alert.css';
+@import './pagination.css';
+
+/* DASHBOARD COMPONENTS */
+@import './header.css';
+@import './sidebar.css';
+@import './footer.css';
+@import './main.css';
+@import './table.css';
+
+
+/* PAGES COMPONENTS */
+@import './pages/home.css';
+@import './pages/users.css';
+@import './pages/pl.css';
+@import './components/breadcrumb.css';
+/* @import ''; */

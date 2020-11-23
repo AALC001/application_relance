@@ -1,0 +1,156 @@
+{% extends 'master.html' %}
+
+{% block title %}Site patient relance{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class='d-flex flex-jcb flex-aic'>
+            <div class="section-block__left d-flex flex-jcb flex-aic">
+<!--                <input type="hidden" name="filter-relance-table" value="{% url 'activite_relance:list_site_relance' %}">-->
+                {% csrf_token %}
+<!--                <div class="form-group">-->
+<!--                    <label for="search-relance-start-date">Recherche </label>-->
+<!--                    <input type="text" id="search-relance-by-text" class="form-control" placeholder="Rechercher">-->
+<!--                </div>-->
+
+
+
+                <form method="GET" action="" class="d-flex flex-jcb flex-aic">
+
+                    <div class="form-group">
+                        <label for="relance_feedback">Feedback</label>
+                        <select name="relance_feedback" id="relance_feedback" class="form-control">
+                            <option value="">Sélectionner le feedback</option>
+                            <option value="auto transfeéré">AUTO TRANSFÉRÉ</option>
+                            <option value="transfere">TRANSFERE</option>
+                            <option value="injoingnable">INJOIGNABLE</option>
+                            <option value="décédé">DÉCÉDÉ</option>
+                            <option value="refus">REFUS</option>
+                            <option value="recherche en cours">RECHERCHE EN COURS</option>
+                            <option value="arrêt volontaire">ARRÊT VOLONTAIRE</option>
+                            <option value="retour aux soins">RETOUR AUX SOINS</option>
+                            <option value="promesse de retour">PROMESSE DE RETOUR</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group ml-2">
+                        <label for="search-relance-start-date">Date début</label>
+                        <input type="date" name="relance_start_at" id="search-relance-start-date" class="form-control">
+                    </div>
+
+                    <div class="form-group ml-2">
+                        <label for="search-relance-start-date">Date fin</label>
+                        <input type="date" name="relance_end_at" id="search-relance-end-date" class="form-control">
+                    </div>
+
+                    <div class="form-group ml-2">
+                    <label for="">&nbsp;</label>
+                        <button type="submit" class="button button-gradient"><i class="flaticon-zoom"></i> Recherche</button>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+            
+            <div class="section-block__right">
+                <a href="{% url 'activite_relance:list_site_relance' %}" class="button button-gradient"><i class="flaticon-refresh"></i> Actualisé</a>
+                {% comment %} <a href="{% url 'activite_relance:export_fiche_relance' %}" class="button button-small button-gradient"><i class="flaticon-share"></i> Exporter</a> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <table class="table" id="admin-relance">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Code patient</th>
+                        <th>Contact patient</th>
+                        <th>Motif</th>
+                        <th>Type de relance</th>
+                        <th>Durée appel</th>
+                        <th>Feedback</th>
+                        <th>Effectuée par</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if relances.count %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucune relance n'est enregistrée
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for relance in relances %}
+                    <tr>   
+
+                        <td>{{ relance.relance_date }}</td>
+
+                        <td>{{ relance.patient_code | upper }}</td>
+
+                        <td>{{ relance.patient_contact }}</td>
+
+                        <td>{{ relance.relance_reason | upper }}</td>
+
+                        <td>{{ relance.type_relance.type | capfirst }}</td>
+
+                        {% if relance.type_relance.relance_call_duration %}
+                            <td>{{ relance.type_relance.relance_call_duration }} min</td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+
+                       
+
+                        <td>{{ relance.feedback.type | capfirst }}</td>
+
+                        <td>{{ relance.owner| capfirst }}</td>
+
+                
+
+                        {% comment %} <td class="action">
+
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="relance_code" value="{{ relance.relance_code }}">
+                                <a data-archive-relance href="{% url 'activite_relance:archive_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a>
+                                <a data-edit-relance href="{% url 'activite_relance:edit_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                            </form>
+                        </td> {% endcomment %}
+
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        {% comment %} <div class="block-filter">
+             <div class="form-group">
+                <label for="relance_type">Filtres</label>
+
+                <div class="form-check-inline">
+
+                    <label for="all-relance">
+                        <input type="radio" name="relance-archive" id="all-relance" value="all" class="form-control" checked> Toutes
+                    </label>
+
+                    <label for="non-archive-relance">
+                        <input type="radio" name="relance-archive" id="non-archive-relance" class="form-control" value="non-archive"> Relances non archivées
+                    </label>
+
+                    <label for="archive-relance">
+                        <input type="radio" name="relance-archive" id="archive-relance" class="form-control" value="archive"> Relances archivées
+                    </label>
+            
+                </div>
+            </div> {% endcomment %}
+            
+        </div>
+    </section>
+
+{% endblock content %}

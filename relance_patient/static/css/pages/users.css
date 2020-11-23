@@ -1,0 +1,12 @@
+
+.user-section .section-block {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.user-section-wrapper {
+    width: 100%;
+    max-width: 576px;
+    margin: 0 auto;
+}

@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appoitment Scheduling | {% block title %}{% endblock title %}</title>
+
+    {% comment %} FONT {% endcomment %}
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+
+    {% comment %} Favicon {% endcomment %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'ico/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'ico/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'ico/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'ico/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'ico/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    {% comment %} style {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    
+    <div class="container">
+        <div class='auth-wrapper'>
+            {% block content %}{% endblock content %}
+            {% include 'shared/auth_text_footer.html' %}
+            {% include 'shared/auth_footer.html' %}
+        </div>     
+    </div>
+    
+    
+        <script src="{% static 'vendors/js/validate.min.js' %}"></script>
+    <script src="{% static 'vendors/js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

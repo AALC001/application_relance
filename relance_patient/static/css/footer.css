@@ -1,0 +1,24 @@
+.app-footer {
+    grid-column: 2 / -1;
+    grid-row: 3 / 4;
+    position: fixed;
+    width: calc(100% - 150px);
+    left: 150px;
+    bottom: 0;
+    height: 60px;
+    /* background-color: var(--light-color); */
+}
+
+.app-footer__content {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+
+@media screen and (max-width: 875px) {
+    .app-footer {
+        width: 100%;
+        left: 0;
+    }
+}

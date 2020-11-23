@@ -1,0 +1,93 @@
+
+.home-section {
+    margin-top: 5rem;
+}
+
+.section__content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-card__box {
+    background-position: left bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow: var(--bs-small);
+    border-left: 4px solid;
+    padding: 1rem;
+    background-color: #fff;
+    background-blend-mode: multiply;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.section-card__box + .section-card__box {
+    margin-left: 4rem;
+    margin-top: 0rem;
+}
+
+
+.section-card__box p {
+    font-size: 4.5rem;
+    font-weight: 600;
+}
+
+.section-card__box span {
+    text-transform: uppercase;
+    margin-top: -1rem;
+}
+
+.section-card__box-patient {
+    border-left-color: var(--pink-color);
+    background-image: url('/static/images/app-content/home/bg-card-patient.png');
+}
+
+.section-card__box-patient p {
+    color: var(--pink-color);
+}
+
+.section-card__box-rdv {
+    border-left-color: var(--teal-color);
+    background-image: url('/static/images/app-content/home/bg-card-calendar.png');
+}
+
+.section-card__box-rdv p {
+    color: var(--teal-color);
+}
+
+.section-card__box-pdv {
+    border-left-color: var(--green-light-color);
+    background-image: url('/static/images/app-content/home/bg-card-relance.png');
+}
+
+.section-card__box-pdv p {
+    color: var(--green-light-color);
+}
+
+.section-card__box-users {
+    border-left-color: var(--blue-light-color);
+    background-image: url('/static/images/app-content/home/bg-card-account.png');
+}
+
+.section-card__box-users p {
+    color: var(--blue-light-color);
+}
+
+
+@media screen and (max-width: 875px) {
+    .section__content {
+       flex-direction: column;
+    }
+
+    .section-card__box {
+        flex-basis: 0;
+    }
+
+    .section-card__box + .section-card__box {
+        margin-top: 4rem;
+        margin-left: 0rem;
+    }
+    
+}

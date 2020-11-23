@@ -1,0 +1,88 @@
+{% extends 'master.html' %}
+
+{% block title %}Création d'un utilisateur{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        {% comment %} <div class="user-section-wrapper"> {% endcomment %}
+
+        <div class="row">
+        
+            <div class="col-sm-12 col-md-6 col-lg-6 mb-sm-4">
+                 <div class="card">
+                 <h1 class="card-title">Modification informations générales</h1>
+                <form action="{% url 'authentication_profile_set_info' %}" method="post" class="form-profile-set-info">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" class="form-control" value="{{account.email}}" placeholder="example@email.com">
+                        <span class="form-error email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="first_name">Nom</label>
+                        <input type="text" name="first_name" id="first_name" class="form-control" value="{{account.user.first_name}}" placeholder="Nom">
+                        <span class="form-error first_name-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name">Prénoms</label>
+                        <input type="text" name="last_name" id="last_name" class="form-control" value="{{account.user.last_name}}" placeholder="Prénoms">
+                        <span class="form-error ast_name-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" name="contact" id="contact" class="form-control" value="{{account.user.contact}}" placeholder="Contact">
+                        <span class="form-error contact-error"></span>
+                    </div>
+
+                    <button type="submit" class="button button-gradient">Enregistrer</button>
+
+                </form>
+        </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                    <div class="card">
+                        <h1 class="card-title">Modification de mot de passe</h1>
+                        <form action="{% url 'authentication_profile_set_password' %}" method="post" class="form-profile-set-password">
+                            {% csrf_token %}
+
+                        <div class="form-group">
+                                <label for="password1">Mot de passe</label>
+                                <input type="password" name="password1" id="password1" class="form-control" placeholder="Mot de passe">
+                                <span class="form-error password1-error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password2">Confirmé le mot de passe</label>
+                                <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirmation du mot de passe">
+                                <span class="form-error password2-error"></span>
+                            </div>
+
+                            <button type="submit" class="button button-gradient">Enregistrer</button>
+
+                        </form>
+                    </div>
+                    </div>
+
+             
+                </div>
+
+                
+
+            </div>
+        
+        </div>
+
+
+        {% comment %} </div> {% endcomment %}
+    </section>
+
+{% endblock content %}

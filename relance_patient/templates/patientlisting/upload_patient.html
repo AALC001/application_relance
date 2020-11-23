@@ -1,0 +1,117 @@
+{% extends 'master.html' %}
+
+{% block title %}Liste des patients{% endblock title %}
+
+{% block content %}
+
+    <section class="home-section section-card">
+
+    <div class="row mb-4 d-flex flex-aic flex-jcb">
+        <div class="col-12 col-md-5 col-lg-5">
+                <form action="{% url 'patientlisting:pl_upload_patient_file' %}" enctype="multipart/form-data" method="POST" class="form-upload-patient-file d-flex flex-aic">
+                    {% csrf_token %}
+                    <input type="hidden" name="url_extract_patient_file" value="{% url 'patientlisting:pl_save_file_content' %}">
+
+                        <div class="form-group mr-4">
+                            <label for="patient_file">Charger votre fichier (format: xlsx).</label>
+                            <input type="file" name="patient_file" id="patient_file" class="form-control" placeholder="Prénoms">
+                            <span class="form-error patient_file-error"></span>
+                        </div>
+                        
+                        <button class="button button-primary" type="submit"><i class='flaticon-upload'></i> Charger</button>         
+                </form>
+        </div>
+
+        <div class="col-sm-12 col-md-7 col-lg-7" style="text-align:right">
+        <a href="{% url 'patientlisting:pl_upload_loaded_patient_file' %}" class="link link-primary"><i class='flaticon-xlsx-file-format-extension'></i> Derniner fichier chargé</a>
+        </div>
+        
+    </div>
+
+    {% if user.account_site_file_loaded %}
+       
+                <div class="card">
+                    <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Contact</th>
+                        <th>RDV ARV</th>
+                        <th>RDV CV</th>
+                        <th>Personne soutien</th>
+                        {% comment %} <th>Contact</th> {% endcomment %}
+                        {% comment %} <th>Lien</th> {% endcomment %}
+                        {% comment %} <th></th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if patients.count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun compte patient
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for patient in patients %}
+                    <tr>
+                       
+
+                        <td>{{ patient.code_patient }}</td>
+                        
+                        <td>{{ patient.first_name | upper }}</td>
+
+                        <td>{{ patient.last_name | capfirst }}</td>
+
+                        <td>{{ patient.contact }}</td>
+
+                        <td>{{ patient.daterdv.date_proch_arv }}</td>
+
+                        <td>{{ patient.daterdv.date_proch_cv }}</td>
+
+                        <td>{{ patient.personsoutien.first_name }} {{ patient.personsoutien.last_name }} ({{ patient.personsoutien.contact }})</td>
+                       
+                        {% comment %} <td>
+                        <form action="" method="POST">
+                                {% csrf_token %}
+                                <a data-edit-relance href="" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                <a data-delete-relance href="" class="button button-small button-ouline-danger"><i class="flaticon-trash"></i></a>
+                            </form>
+                            
+                        </td> {% endcomment %}
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+                </div>
+    {% else %}
+        <div class="row">
+        <div class="col-12 col-md-6 m-md-auto m-lg-6">
+            <h4 class="mb-4">Aucun patient n'est enregistré pour le site, veuillez charger la fiche patient. Cliquer ici pour télécharger le modèle du fichier <a href="{% url 'patientlisting:pl_patient_model_file' %}" class="link link-primary"><i class='flaticon-xlsx-file-format-extension'></i> Fiche Modèle</a>.</h4>
+            <div class="card">
+                <form action="{% url 'patientlisting:pl_upload_patient_file' %}" enctype="multipart/form-data" method="POST" class="form-upload-patient-file">
+
+                    {% csrf_token %}
+                    <input type="hidden" name="url_extract_patient_file" value="{% url 'patientlisting:pl_save_file_content' %}">
+                     <div class="form-group">
+                        <label for="patient_file">Charger votre fichier (format: xlsx, xls)</label>
+                        <input type="file" name="patient_file" id="patient_file" class="form-control" placeholder="Prénoms">
+                        <span class="form-error patient_file-error"></span>
+                    </div>
+
+                    <button class="button button-primary w-100" type="submit"><i class='flaticon-upload'></i> Charger</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+    </section>
+
+   
+
+{% endblock content %}

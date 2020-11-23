@@ -1,0 +1,93 @@
+{% extends 'master.html' %}
+
+{% block title %}Création d'un utilisateur{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class="user-section-wrapper">
+        <div class="card">
+            <form action="{% url 'authentication:create' %}" method="post" class="form-create-user">
+                {% csrf_token %}
+
+                 <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" placeholder="example@email.com">
+                    <span class="form-error email-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="first_name">Nom</label>
+                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Nom">
+                    <span class="form-error first_name-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="last_name">Prénoms</label>
+                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Prénoms">
+                    <span class="form-error ast_name-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="contact">Contact</label>
+                    <input type="text" name="contact" id="contact" class="form-control" placeholder="Contact">
+                    <span class="form-error contact-error"></span>
+                </div>
+
+                {% if user.is_super %}
+                <div class="form-group">
+                    <label for="site_code">Nom du site</label>
+                    <select name="site_code" id="site_code" class="form-control">
+                        <option value="">Sélectionner le site</option>
+                        {% for site in sites %}
+                            <option value="{{ site.site_code }}">{{ site.site_name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% comment %} <input type="text" name="contact" id="contact" class="form-control" placeholder="Contact"> {% endcomment %}
+                    <span class="form-error contact-error"></span>
+                </div>
+                {% endif %}
+
+                {% comment %} <div class="form-group">
+                    <label for="password1">Mot de passe</label>
+                    <input type="password" name="password1" id="password1" class="form-control" placeholder="Mot de passe">
+                    <span class="form-error password1-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password2">Confirmé le mot de passe</label>
+                    <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirmation du mot de passe">
+                    <span class="form-error password2-error"></span>
+                </div> {% endcomment %}
+
+                <div class="form-group">
+                    <label for="password2">Rôles</label>
+
+                    <div class="form-check-inline">
+
+                         {% if user.is_staff and not user.is_super or not user.is_admin  %} 
+                        <label for="role_staff">
+                            <input type="radio" name="role_admin" id="role_staff" class="form-control" value="false" checked> Standard
+                        </label>
+                         {% endif %}
+                        
+
+                        {% if user.is_super %}                    
+                            <label for="role_admin">
+                                <input type="radio" name="role_admin" id="role_admin" value="true" class="form-control" checked> Administrateur
+                            </label>
+                        {% endif %}
+                
+                    </div>
+                </div>
+
+                <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
+
+            </form>
+        </div>
+
+        </div>
+    </section>
+
+{% endblock content %}

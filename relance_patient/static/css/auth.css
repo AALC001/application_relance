@@ -1,0 +1,36 @@
+@import './variable.css';
+@import './common.css';
+@import './login/auth_footer.css';
+@import './login/auth_text_footer.css';
+@import './form.css';
+@import './alert.css';
+@import './login/auth_login.css';
+
+
+body {
+    height: 100vh;
+    min-height: 100vh;
+    background-position: right bottom;
+    /* background-size: contain; */
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-image: url('/static/images/app-content/bg-login.png');
+}
+
+.section-login  {
+    position: absolute;
+    width: 450px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-login .logo  {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-login .logo-dark {
+    width: 7rem;
+}
+

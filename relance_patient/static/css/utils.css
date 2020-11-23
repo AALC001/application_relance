@@ -1,0 +1,25 @@
+.w-100 {
+    width: 100%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-jcb {
+    justify-content: space-between;
+}
+
+.flex-aic {
+    align-items: center;
+}
+
+.flex-ais {
+    align-items: stretch;
+}
+
+.is-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: .4;
+}

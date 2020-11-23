@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <style>
+
+        @page {
+            size: A4 landscape;
+            margin: 1cm;
+        }
+
+        body {
+            background: #fff
+        }
+
+
+        #report-id {
+            text-transform: uppercase;
+            text-align:center;
+            margin-bottom: 30px;
+            text-decoration: underline;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1.5cm;
+        }
+
+
+        .report-header ul li p.left{
+            margin-right: 4px;
+            font-weight: bold;
+        }
+
+        .report-header ul li{
+            display:flex;
+            justify-content:left;
+        }
+
+         .report-header-site {
+             flex:2;
+        }
+
+        .report-header-user {
+            flex:1;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table tbody tr:nth-child(even){
+            background-color: #f4f4f4;
+        }
+
+
+    </style>
+</head>
+<body>
+        <h1 id="report-id">Rapport de relance</h1>
+
+        <div class="report-header">
+            <ul class="report-header-site">
+                <li>
+                    <p class="left">D.R Santé:</p>
+                    <p class="right">{{ service.direction_region }}</p>
+                </li>
+
+                 <li>
+                    <p class="left">Région sanitaires:</p>
+                    <p class="right">{{ service.region }}</p>
+                </li>
+
+                 <li>
+                    <p class="left">District sanitaire:</p>
+                    <p class="right">{{ service.district }}</p>
+                </li>
+
+                 <li>
+                    <p class="left">Nom du site:</p>
+                    <p class="right">{{ service.site_name }}</p>
+                </li>
+
+                 <li>
+                    <p class="left">Code de l'établissement:</p>
+                    <p class="right">{{ service.site_code }}</p>
+                </li>
+            </ul>
+
+            <ul class="report-header-user">
+                 <li>
+                    <p class="left">Nom du service:</p>
+                    <p class="right">{{ service.service }}</p>
+                </li>
+
+                 <li>
+                    <p class="left">Période:</p>
+                    <p class="right">{{relances_periode.start}} - {{relances_periode.end}}</p>
+                </li>
+
+                 <li>
+                    <p class="left">Nom de l'agent:</p>
+                    <p class="right">{{ user.user.first_name | upper }} {{ user.user.last_name | upper }}</p>
+                </li>
+            </ul>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Code patient</th>
+                    <th>Contact patient</th>
+                    <th>Motif</th>
+                    <th>Type de relance</th>
+                    {% comment %} <th>Domicile patient</th> {% endcomment %}
+                    <th>Durée appel</th>
+                    <th>Résultat appel</th>
+                    {% comment %} <th>Commantaire</th> {% endcomment %}
+                </tr>
+            </thead>
+            <tbody>
+
+                {% if relances.count == 0 %}
+   
+                <tr>
+                    <td></td>
+                </tr>
+                
+                {% else %}
+                    {% for relance in relances.relances %}
+                    <tr>
+                        <td>{{relance.relance_date}}</td>
+                        <td>{{relance.patient_code}}</td>
+                        <td>{{relance.patient_contact}}</td>
+                        <td>{{relance.relance_reason}}</td>
+                        <td>{{relance.type_relance.type}}</td>
+                        <td>{{relance.type_relance.relance_call_duration}}</td>
+                        <td>{{relance.feedback.type}}</td>
+                        {% comment %} <td>{{relance.relance_date}}</td> {% endcomment %}
+                    </tr>
+                    {% endfor %}
+
+                {% endif %}
+                
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>

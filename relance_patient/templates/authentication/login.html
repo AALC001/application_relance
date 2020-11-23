@@ -1,0 +1,66 @@
+{% extends 'auth_master.html' %}
+
+{% load static %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block content %}
+
+    <section class="section-login">
+
+        <div class="card">
+
+            <form action="{% url 'authentication_login' %}" method='post' class="form-login">
+            
+                {% csrf_token %}
+
+                <h2 class='form__title'>Connexion</h2>
+
+                <span class="login-error"></span>
+
+                {% if messages  %}
+
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                 <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+
+                {% else %}
+
+                 <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{message}}
+                </div>
+                {% endif %}
+               
+            
+            {% endfor %}
+
+            {% endif %}
+
+                <div class="form-group">
+                    <label for="auth-email">Email</label>
+                    <input type="text" name="auth-email" id="auth-email" class="form-control" placeholder="example@email.com">
+                    <span class="form-error email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="auth-password">Mot de passe</label>
+                    <input type="password" name="auth-password" id="auth-password" class="form-control" placeholder="Mot de passe">
+                    <span class="form-error password-error"></span>
+                </div>
+
+                 <div class="form-check-inline">
+                    <label for="auth-persist">Rester connecté</label>
+                    <input type="checkbox" name="auth-persist" id="auth-persist" class='form-control-check'>
+                </div>
+
+                {% comment %} <input type="submit" id='button-login' class='button button-gradient' value="Se Connecter"> {% endcomment %}
+                <button type="submit" id='button-login' class='button button-gradient'>Se Connecter</button>
+            </form>
+        </div>
+    </section>
+
+{% endblock content %}

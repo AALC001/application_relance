@@ -1,0 +1,114 @@
+{% extends 'master.html' %}
+
+{% block title %}Modification de relance{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class="user-section-wrapper">
+        <div class="card">
+            <form action="{% url 'activite_relance:edit_relance' relance_code=relance.relance_code %}" method="post" class="form-edit-relance">
+                {% csrf_token %}
+
+                <input type="hidden" name="relance_code" value="{{ relance.relance_code }}">
+
+                <div class="form-group">
+                    <label for="relance_date">Date de relance</label>
+                    <input type="date" name="relance_date" id="relance_date" class="form-control" placeholder="Date de relance" value="{{ relance.relance_date }}">
+                    <span class="form-error relance_date-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="patient_code">Code patient</label>
+                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX" value="{{ relance.patient_code  }}">
+                    <span class="form-error patient_code-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="patient_contact">Numéro de télphone patient</label>
+                    <input type="text" name="patient_contact" id="patient_contact" class="form-control" placeholder="02020202" value="{{ relance.patient_contact }}">
+                    <span class="form-error patient_contact-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="relance_reason">Motif de la relance</label>
+                    <select name="relance_reason" id="relance_reason" class="form-control">
+                        <option value="">Sélection le motif</option>
+                        {% for motif in motifs %}
+                            <option value="{{motif}}" {% if relance.relance_reason == motif %}selected{% else %}{% endif %}>{{motif | upper}}</option>
+                        {% endfor %}
+                        {% comment %} <option value="arv" {% if relance.relance_reason == "arv" %}selected{% else %}{% endif %}>ARV</option>
+                        <option value="charge virale" {% if relance.relance_reason == "charge virale" %}selected{% else %}{% endif %}>CHARGE VIRALE</option> {% endcomment %}
+                        <option value="other" {% if not relance.relance_reason in motifs and not relance.relance_reason == "" %}selected{% else %}{% endif %}>AUTRES</option>
+                    </select>
+                    <span class="form-error relance_reason-error"></span>
+                </div>
+
+                 <div class="form-group hide" data-relance-reason-other>
+                    <label for="relance_reason_other">Précisez le motif</label>
+                    <input type="text" name="relance_reason_other" value="{% if not relance.relance_reason in motifs and not relance.relance_reason == '' %}{{relance.relance_reason}}{% else %}{% endif %}" id="relance_reason_other" class="form-control hide" placeholder="Autre motif">
+                    <span class="form-error relance_reason_other-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="relance_type">Type de relance</label>
+
+                    <div class="form-check-inline">
+
+                        <label for="relance_type_visit">
+                            <input type="radio" name="relance_type" id="relance_type_visit" value="visite" class="form-control" {% if relance.type_relance.type.lower == "visite" %}checked{% endif %}> Visite à domicile
+                        </label>
+
+                        <label for="relance_type_call">
+                            <input type="radio" name="relance_type" id="relance_type_call" class="form-control" value="appel" {% if relance.type_relance.type.lower == "appel" %}checked{% endif %}> Appel
+                        </label>
+                
+                    </div>
+                </div>
+
+
+                <div class="form-group hide" data-call-duration>
+                    <label for="call_durantion">Durée appel</label>
+                    <input type="text" name="call_durantion" id="call_durantion" class="form-control hide" placeholder="3.5" value="{{ relance.type_relance.relance_call_duration }}">
+                    <span class="form-error call_durantion-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="relance_feedback">Feedback patient</label>
+                    <select name="relance_feedback" id="relance_feedback" class="form-control">
+                        <option value="">Sélectionner le feedback</option>
+                        {% for feed in feedback %}
+                        <option {% if relance.feedback.type == feed %}selected{% endif %} value="{{feed|lower}}">{{feed|upper}}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="form-error relance_feedback-error"></span>
+                </div>
+
+                <div class="form-group hide" data-feedback-visite-date>
+                    <label for="feedback_visite_date">Date de visite</label>
+                    <input type="date" name="feedback_visite_date" id="feedback_visite_date" class="form-control hide" value="{{relance.feedback.visite_date}}">
+                    <span class="form-error feedback_visite_date-error"></span>
+                </div>
+
+                <div class="form-group hide" data-feedback-description>
+                    <label for="feedback_description">Feedback description</label>
+                    <textarea name="feedback_description" id="feedback_description" placeholder="Message" class="form-control hide">{{relance.feedback.description}}</textarea>
+                    <span class="form-error feedback_description-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="relance_comment">Commentaire</label>
+                    <textarea name="relance_comment" id="relance_comment" placeholder="Commentaire" class="form-control">{{relance.comment}}</textarea>
+                    <span class="form-error relance_comment-error"></span>
+                </div>
+
+                <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
+
+            </form>
+        </div>
+
+        </div>
+    </section>
+
+{% endblock content %}

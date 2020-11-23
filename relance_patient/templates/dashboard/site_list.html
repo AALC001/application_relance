@@ -1,0 +1,80 @@
+{% extends 'master.html' %}
+
+{% block title %}Sites{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+    {% comment %} <div class="row"> {% endcomment %}
+        {% comment %} <div class="col-md-8 col-sm-12 m-md-auto m-sm-0"> {% endcomment %}
+        <div class='section-block'>
+            <a href="{% url 'dashboard:site_create' %}" class="button button-gradient add-user"><i class="flaticon-plus-1"></i> Ajouter un site</a>
+        </div>
+
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th>Region</th>
+                        <th>District</th>
+                        <th>Direction</th>
+                        <th>Service</th>
+                        <th>Administrateur</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if sites.count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun site n'est enregistré
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for site in sites %}
+                    <tr>   
+                        <td>{{ site.site_code }}</td>
+
+                        <td>{{ site.site_name }}</td>
+
+                        <td>{{ site.region }}</td>
+
+                        <td>{{ site.district }}</td>
+
+                        <td>{{ site.direction_region }}</td>
+
+                        <td>{{ site.service}}</td>
+
+                        {% if site.site_admin != None %}
+                            <td>{{ site.site_admin.user.first_name | upper }} {{ site.site_admin.user.last_name | upper }}</td>
+                        {% else %}
+                            <td>Pas attribué</td>
+                        {% endif %}
+                       
+                        <td class="action">
+
+                            <form action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="site_id" value="{{ site.pk }}">
+                                {% comment %} <a href="{% url 'dashboard:site_attribute' %}" class="button button-small button-ouline-dark"><i class="flaticon-diagonal"></i></a> {% endcomment %}
+                                <a href="{% url 'dashboard:site_edit' pk=site.pk %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                {% comment %} <a href="{% url 'dashboard:site_delete' %}" class="button button-small button-ouline-danger"><i class="flaticon-trash"></i></a> {% endcomment %}
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        {% comment %} </div> {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+    </section>
+
+{% endblock content %}

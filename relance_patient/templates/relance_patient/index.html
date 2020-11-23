@@ -1,0 +1,78 @@
+{% extends 'master.html' %}
+
+{% block title %}Relance patient{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class='section-block'>
+            <a href="{% url 'activite_relance:add_relance' %}" class="button button-gradient add-user"><i class="flaticon-plus-1"></i> Ajouter une relance</a>
+        </div>
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Code patient</th>
+                        {% comment %} <th>Numéro patient</th> {% endcomment %}
+                        <th>Motif</th>
+                        <th>Type de relance</th>
+                        <th>Durée appel</th>
+                        <th>Feedback</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if relances.count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucune relance n'est enregistrée
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for relance in relances %}
+                    <tr>   
+
+                        <td>{{ relance.relance_date }}</td>
+
+                        <td>{{ relance.patient_code | upper }}</td>
+
+                        {% comment %} <td>{{ relance.patient_contact }}</td> {% endcomment %}
+
+                        <td>{{ relance.relance_reason | upper }}</td>
+
+                        <td>{{ relance.type_relance.type | upper }}</td>
+
+                        {% if relance.type_relance.relance_call_duration %}
+                            <td>{{ relance.type_relance.relance_call_duration }} MIN</td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+
+                       
+
+                        <td>{{ relance.feedback.type | upper }}</td>
+
+                
+
+                        <td class="action">
+
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="relance_code" value="{{ relance.relance_code }}">
+                                {% comment %} <a data-archive-relance href="{% url 'activite_relance:archive_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a> {% endcomment %}
+                                <a data-edit-relance href="{% url 'activite_relance:edit_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                {% comment %} <a data-delete-relance href="" class="button button-small button-ouline-danger"><i class="flaticon-trash"></i></a> {% endcomment %}
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+{% endblock content %}

@@ -1,0 +1,16 @@
+.section-text {
+    bottom: 20%;
+}
+.section-text div   {
+    width: 450px;
+}
+
+.section-text a {
+	color: #f27173;
+	text-decoration: none;
+}
+
+.section-text a:hover {
+	color: #e25f5f;
+	text-decoration: underline;
+}

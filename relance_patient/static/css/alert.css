@@ -1,0 +1,30 @@
+.alert {
+    display: inline-block;
+    padding: 2rem;
+    border-radius: 4px;
+    font-size: 1.7rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.alert-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.alert-warning {
+    background-color: var(--warning-color);
+}
+
+.alert-warning a {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.alert-danger {
+    background-color: var(--danger-color);
+}
+
+.alert-info {
+    background-color: var(--info-color);
+}

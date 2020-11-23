@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{csrf_token}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appoitment Scheduling | {% block title %}{% endblock title %}</title>
+
+    {% comment %} FONT {% endcomment %}
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/line-awesome/css/line-awesome.min.css' %}">
+
+    {% comment %} Favicon {% endcomment %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'ico/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'ico/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'ico/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'ico/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'ico/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    {% comment %} Bootstrap {% endcomment %}
+    <link rel="stylesheet" href="{% static 'vendors/css/bootstrap-grid.min.css' %}">
+
+    {% comment %} style {% endcomment %}
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+
+    {% comment %} Loader {% endcomment %}
+    <div class="loader">
+        <p class="loader__text"></p>
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+    
+    <div class="app-wrapper grid">
+
+        {% include 'shared/header.html' %}
+        {% include 'shared/sidebar.html' %}
+
+        <main class="app-main">
+            <div class="container">
+            
+            {% if request.user.first_connection and path_name.url_name != "authentication_profile" %}
+            <span class="alert alert-warning mb-4">
+                Veuillez changer le mot de passe par default de votre compte (<strong>{{request.user.email}}</strong>) ▶️ <a href="{% url 'authentication_profile' %}">cliquer ici</a> 
+            </span>
+            {% endif %}
+
+            <div id="breadcrumb"></div>
+
+                {% block content %}{% endblock content %}
+            </div>     
+        </main>
+        
+        {% include 'shared/footer.html' %}
+    </div>
+    
+
+    {% comment %} Bootstrap {% endcomment %}
+    {% comment %} <script src="{% static 'vendors/js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'vendors/js/bootstrap.bundle.min.js' %}"></script> {% endcomment %}
+
+    {% comment %} REACT JS {% endcomment %}
+     <script src="{% static 'vendors/js/babel.min.js' %}"></script>
+    {% comment %} {% if  %} {% endcomment %}
+        {% comment %} <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script> {% endcomment %}
+    {% comment %} {% else %} {% endcomment %}
+        <script src="{% static 'vendors/js/react.production.min.js' %}"></script>
+        <script src="{% static 'vendors/js/react-dom.production.min.js' %}"></script>
+    {% comment %} {% endif %} {% endcomment %}
+   
+    
+
+
+    {% comment %} COMPONENETS {% endcomment %}
+    <script type="text/babel" src="{% static 'js/components/Breadcrumb.js' %}"></script>
+    <script type="text/babel" src="{% static 'js/components/Card.js' %}"></script>
+    <script type="text/babel" src="{% static 'js/components/index.js' %}"></script>
+
+    {% comment %} VENDORS {% endcomment %}
+    <script src="{% static 'vendors/js/validate.min.js' %}"></script>
+    <script src="{% static 'vendors/js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'vendors/js/Chart.js/Chart.bundle.min.js' %}"></script>
+
+    {% comment %} APP JS {% endcomment %}
+    
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

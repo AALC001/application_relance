@@ -1,0 +1,32 @@
+{% extends 'master.html' %}
+
+{% block title %}Modification de site{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class="user-section-wrapper">
+        <div class="card">
+            <h1 class="card-title">Modification du site</h1>
+            <form action="{% url 'dashboard:site_edit' pk=site.pk %}" method="post" class="form-edit-site">
+                {% csrf_token %}
+                <input type="hidden" name="site_id" id="site_id" value="{{ site.pk }}">
+
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        <span class="form-error"></span>
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
+
+            </form>
+        </div>
+
+        </div>
+    </section>
+
+{% endblock content %}

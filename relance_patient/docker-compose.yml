@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: ./wait-for-it.sh db:3306 -t 30 -- ./start.sh
+    container_name: ap_apps
+    volumes:
+      - ./config/nginx/certs/:/etc/certs
+      - ./static:/src/static
+    expose:
+      - "8888"
+    depends_on:
+      - db
+  nginx:
+    image: nginx:latest
+    container_name: ap_apps_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./config/nginx/:/etc/nginx/conf.d
+      - ./static:/static
+    depends_on:
+      - web
+  db:
+    image: mysql:8.0.21
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    expose:
+      - "3306"
+    restart: always
+    environment:
+      - MYSQL_DATABASE=BD_APPOINTMENT
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=password
+  #db:
+  #  image: mysql:8.0.21
+  #  environement:
+  #    MYSQL_ROOT_PASSWORD: kanban_01
+  #    MYSQL_DATABASE: data_kanban
+  #  ports:
+  #    - "3306:3306"

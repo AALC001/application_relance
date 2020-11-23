@@ -1,0 +1,36 @@
+
+.breadcrumb__list {
+    display: flex;
+}
+
+.breadcrumb__item {
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--primary-color);
+}
+
+.breadcrumb__item:not(:last-child) {
+    margin-right: 3rem;
+    position: relative;
+}
+
+.breadcrumb__item:not(:last-child)::after {
+    content: "\00BB";
+    position: absolute;
+    color: var(--primary-color);
+    font-size: 3rem;
+    right: -2.25rem;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.breadcrumb__link {
+    color: var(--pink-color);
+    text-transform: uppercase;
+    transition: all .2s;
+    font-weight: 400;
+}
+
+.breadcrumb__link:hover {
+    text-decoration: underline;
+}

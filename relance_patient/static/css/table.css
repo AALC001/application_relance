@@ -1,0 +1,114 @@
+.table {
+    width: 100%;
+}
+
+.table tr{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    align-items: center;
+}
+
+.table tr th, .table tr td {
+    flex: 1;
+}
+
+.table thead tr{
+    border-bottom: 1.5px solid var(--light-color);
+    text-align: left;
+    text-transform: uppercase;
+    padding: 1rem 0;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid var(--light-color);
+    padding: 1rem 0;
+}
+
+.table tbody tr td {
+    font-weight: 400;
+}
+
+.table tbody tr td.status{
+    display: flex;
+    align-items: center;
+}
+
+.table tbody tr td.status-lock-unlock{
+    display: flex;
+    justify-content: center;
+}
+
+.table tbody tr td.status span{
+    width: .8em;
+    height: .8em;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: .5em;
+}
+
+.table tbody tr td.status-active span{
+    background-color: var(--success-color);
+}
+
+.table tbody tr td.status-inactive span{
+    background-color: var( --danger-color);
+}
+
+.table tbody tr td.role span{
+    background-color: var(--sidebar-link-active);
+    color: #fff;
+    border-radius: 200px;
+    padding: .2em 1.5rem;
+}
+
+.table tbody tr td.action {
+   text-align: center;
+   position: relative;
+}
+
+.table tbody tr:nth-child(even){
+   background-color: #f4f4f4;
+}
+
+.action-menu {
+    cursor: pointer;
+    transition: transform .2s;
+    display: inline-block;
+}
+
+.action-menu:hover {
+    transform: scale(1.15);
+}
+
+.action-nav-menu {
+    text-align: left;
+    background-color: #fff;
+    box-shadow: var(--bs-small);
+    position: absolute;
+    width: 15rem;
+    min-width: 15rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    z-index: 555;
+}
+
+.action-nav-menu.is-show {
+    display: block!important;
+}
+
+.action-nav-menu li a {
+    padding: .3em;
+    color: var(--dark-color);
+    display: inline-block;
+    width: 100%;
+    transition: all .2s;
+    padding-left: 1em;
+}
+
+.action-nav-menu li a:hover {
+    background-color: var(--light-color);
+
+}
+

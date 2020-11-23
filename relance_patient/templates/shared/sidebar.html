@@ -1,0 +1,81 @@
+{% load static %}
+<div class="app-sidebar">
+    <div class="app-sidebar__header">
+        <h1 class="app-sidebar__title">
+            <img src="{% static 'images/logo-white.svg' %}" alt="Logo blanc Appointent Scheduling couleur" style="width:5rem">
+        </h1>
+    </div>
+   
+
+    <ul class="app-sidebar__menu">
+        {% if user.is_admin and not user.is_super %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'dashboard:home' %}" class="app-sidebar__link {% if path_name.url_name == "home" %}active{% endif %}">
+                <i class="flaticon-menu-1"></i>
+                Dashboard
+            </a>
+        </li>
+         {% endif %}
+
+        {% if user.is_super %}
+         <li class="app-sidebar__item">
+            <a href="{% url 'dashboard:site_list' %}" class="app-sidebar__link {% if path_name.url_name == "site_list" or path_name.url_name == "site_create" or path_name.url_name == "site_edit" %}active{% endif %}">
+                <i class="flaticon-hospital"></i>
+                Sites
+            </a>
+        </li>
+        {% endif %}
+
+         {% if user.is_super %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'authentication:index' %}" class="app-sidebar__link {% if path_name.url_name == "index" or path_name.url_name == "create" %}active{% endif %}">
+                <i class="flaticon-user-1"></i>
+                Site admin
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.is_admin and not user.is_super %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'patientlisting:pl_index' %}" class="app-sidebar__link {% if path_name.url_name == "pl_index" or path_name.url_name == "pl_upload_patient_file" or path_name.url_name == "pl_month_rdv" or path_name.url_name == "pl_lost_rdv" or path_name.url_name == "pl_missed_rdv"%}active{% endif %}">
+                <i class="flaticon-list"></i>
+                Listing patient
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.is_admin and not user.is_super %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'activite_relance:list_site_relance' %}" class="app-sidebar__link {% if path_name.url_name == "list_site_relance" %}active{% endif %}">
+                <i class="flaticon-diagonal"></i>
+                List relance
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.is_admin and not user.is_super %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'authentication:index' %}" class="app-sidebar__link {% if path_name.url_name == "index" or path_name.url_name == "create" %}active{% endif %}">
+                <i class="flaticon-user-1"></i>
+                Utilisateurs
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.is_staff and not user.is_super and not user.is_admin %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'activite_relance:list_relance' %}" class="app-sidebar__link {% if path_name.url_name == "list_relance" or path_name.url_name == "edit_relance" or path_name.url_name == "add_relance" %}active{% endif %}">
+                <i class="flaticon-diagonal"></i>
+                Relance patient
+            </a>
+        </li>
+        {% endif %}
+
+         <li class="app-sidebar__item">
+            <a href="{% url 'authentication_profile' %}" class="app-sidebar__link {% if path_name.url_name == "authentication_profile" %}active{% endif %}">
+                <i class="flaticon-user"></i>
+                Profile
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,36 @@
+.section-footer {
+    position: absolute;
+    left: 0;
+    bottom: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.section-footer__menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.section-footer__item {
+    width: 150px;
+}
+
+.section-footer__item + .section-footer__item {
+    margin-left: 3rem;
+}
+
+.section-footer__item-sejen {
+    
+}
+
+.section-footer__item-dcli {
+    
+}
+
+.section-footer__item-dcdj {
+    
+}

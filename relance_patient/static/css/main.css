@@ -1,0 +1,11 @@
+.app-main {
+    grid-column: 2/ -1;
+    grid-row: 2 / 3;
+    padding: 4rem 0;
+}
+
+@media screen and (max-width: 875px) {
+    .app-main {
+        grid-column: 1/-1;
+    }
+}

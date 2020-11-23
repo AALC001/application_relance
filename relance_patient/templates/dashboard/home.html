@@ -1,0 +1,122 @@
+{% extends 'master.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+
+    <section class="home-section section-card dash-section">
+        <input type="hidden" name="count-patient-url", value="{{ patient_url }}">
+
+        <div class="section__content">
+            <div class="section-card__box section-card__box-patient" >
+               <div id="count-patient">0</div>
+                <span>PATIENTS</span> 
+            </div>
+
+            {% comment %} <div class="section-card__box section-card__box-rdv">
+                <p>23</p>
+                <span>RDV / Semaine</span>
+            </div> {% endcomment %}
+
+            <div class="section-card__box section-card__box-pdv">
+                <p>{{len_relance}}</p>
+                <span>{% if len_relance <= 1 %}Relance{% else %}RELANCES{% endif %}</span>
+            </div>
+
+            <div class="section-card__box section-card__box-users">
+                <p>{{len_account}}</p>
+                <span>{% if len_account <= 1 %}Utilisateur{% else %}Utilisateurs{% endif %}</span>
+            </div>
+        </div>
+    </section>
+
+     <section class="home-section section-card">
+        <div class="d-flex flex-aic flex-jcb">
+            <p class="section__title">Dernières relances</p>
+
+            <a class="link link-primary" href="{% url 'activite_relance:list_site_relance' %}">Plus de relances <i class="las la-angle-right"></i></a>
+        </div>
+        
+
+
+
+        <div class="card">
+            <table class="table" id="admin-relance">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Code</th>
+                        <th>Contact</th>
+                        <th>Motif</th>
+                        <th>Type relance</th>
+                        <th>Durée appel</th>
+                        <th>Effectuée par</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if relances is None %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucune relance n'est enregistrée
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for relance in relances %}
+                    <tr>   
+
+                        <td>{{ relance.relance_date }}</td>
+
+                        <td>{{ relance.patient_code | upper }}</td>
+
+                        <td>{{ relance.patient_contact }}</td>
+
+                        <td>{{ relance.relance_reason | upper }}</td>
+
+                        <td>{{ relance.type_relance.type | upper }}</td>
+
+                        {% if relance.type_relance.relance_call_duration %}
+                            <td>{{ relance.type_relance.relance_call_duration }} MIN</td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+
+                        <td>{{ relance.owner| upper }}</td>
+
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <section class="home-section section-card">
+            {% comment %} 
+                <p class="section__title">Graphique des relances effectuées</p> 
+                <div class="card">
+                    <canvas id="myChart" width="100%" heigh="200px"></canvas> 
+                </div>
+            {% endcomment %}
+
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-12">
+                    <p class="section__title">Graph des relances effectuées</p> 
+                    <div class="card">
+                        <canvas id="myChart" width="100%" heigh="200px"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-6 col-12">
+                    {% comment %} <p class="section__title">Rapport relances</p> 
+                    <div class="card">
+                        <canvas id="myChart-2" width="100%" heigh="200px"></canvas>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+    </section>
+
+    
+
+{% endblock content %}

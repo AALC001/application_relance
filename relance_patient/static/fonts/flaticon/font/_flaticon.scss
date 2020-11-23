@@ -1,0 +1,130 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 17/09/2020 10:13
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-home:before { content: "\f100"; }
+.flaticon-envelope:before { content: "\f101"; }
+.flaticon-trash:before { content: "\f102"; }
+.flaticon-diagonal:before { content: "\f103"; }
+.flaticon-folder:before { content: "\f104"; }
+.flaticon-settings:before { content: "\f105"; }
+.flaticon-bell:before { content: "\f106"; }
+.flaticon-reload:before { content: "\f107"; }
+.flaticon-calendar:before { content: "\f108"; }
+.flaticon-clinic:before { content: "\f109"; }
+.flaticon-medical-folder:before { content: "\f10a"; }
+.flaticon-income:before { content: "\f10b"; }
+.flaticon-plus:before { content: "\f10c"; }
+.flaticon-job:before { content: "\f10d"; }
+.flaticon-open-menu:before { content: "\f10e"; }
+.flaticon-file:before { content: "\f10f"; }
+.flaticon-team:before { content: "\f110"; }
+.flaticon-menu:before { content: "\f111"; }
+.flaticon-lock:before { content: "\f112"; }
+.flaticon-lock-1:before { content: "\f113"; }
+.flaticon-cancel:before { content: "\f114"; }
+.flaticon-logout:before { content: "\f115"; }
+.flaticon-user:before { content: "\f116"; }
+.flaticon-user-1:before { content: "\f117"; }
+.flaticon-clipboard:before { content: "\f118"; }
+.flaticon-hospital:before { content: "\f119"; }
+.flaticon-menu-1:before { content: "\f11a"; }
+.flaticon-edit:before { content: "\f11b"; }
+.flaticon-file-1:before { content: "\f11c"; }
+.flaticon-man:before { content: "\f11d"; }
+.flaticon-share:before { content: "\f11e"; }
+.flaticon-zoom:before { content: "\f11f"; }
+.flaticon-plus-1:before { content: "\f120"; }
+.flaticon-add-user:before { content: "\f121"; }
+.flaticon-floppy-disk:before { content: "\f122"; }
+.flaticon-login:before { content: "\f123"; }
+.flaticon-refresh:before { content: "\f124"; }
+.flaticon-upload:before { content: "\f125"; }
+.flaticon-xlsx-file-format-extension:before { content: "\f126"; }
+.flaticon-to-do-list:before { content: "\f127"; }
+.flaticon-panel:before { content: "\f128"; }
+.flaticon-files:before { content: "\f129"; }
+.flaticon-list-1:before { content: "\f12a"; }
+.flaticon-list:before { content: "\f12b"; }
+.flaticon-shuffle:before { content: "\f12c"; }
+    
+    $font-Flaticon-home: "\f100";
+    $font-Flaticon-envelope: "\f101";
+    $font-Flaticon-trash: "\f102";
+    $font-Flaticon-diagonal: "\f103";
+    $font-Flaticon-folder: "\f104";
+    $font-Flaticon-settings: "\f105";
+    $font-Flaticon-bell: "\f106";
+    $font-Flaticon-reload: "\f107";
+    $font-Flaticon-calendar: "\f108";
+    $font-Flaticon-clinic: "\f109";
+    $font-Flaticon-medical-folder: "\f10a";
+    $font-Flaticon-income: "\f10b";
+    $font-Flaticon-plus: "\f10c";
+    $font-Flaticon-job: "\f10d";
+    $font-Flaticon-open-menu: "\f10e";
+    $font-Flaticon-file: "\f10f";
+    $font-Flaticon-team: "\f110";
+    $font-Flaticon-menu: "\f111";
+    $font-Flaticon-lock: "\f112";
+    $font-Flaticon-lock-1: "\f113";
+    $font-Flaticon-cancel: "\f114";
+    $font-Flaticon-logout: "\f115";
+    $font-Flaticon-user: "\f116";
+    $font-Flaticon-user-1: "\f117";
+    $font-Flaticon-clipboard: "\f118";
+    $font-Flaticon-hospital: "\f119";
+    $font-Flaticon-menu-1: "\f11a";
+    $font-Flaticon-edit: "\f11b";
+    $font-Flaticon-file-1: "\f11c";
+    $font-Flaticon-man: "\f11d";
+    $font-Flaticon-share: "\f11e";
+    $font-Flaticon-zoom: "\f11f";
+    $font-Flaticon-plus-1: "\f120";
+    $font-Flaticon-add-user: "\f121";
+    $font-Flaticon-floppy-disk: "\f122";
+    $font-Flaticon-login: "\f123";
+    $font-Flaticon-refresh: "\f124";
+    $font-Flaticon-upload: "\f125";
+    $font-Flaticon-xlsx-file-format-extension: "\f126";
+    $font-Flaticon-to-do-list: "\f127";
+    $font-Flaticon-panel: "\f128";
+    $font-Flaticon-files: "\f129";
+    $font-Flaticon-list-1: "\f12a";
+    $font-Flaticon-list: "\f12b";
+    $font-Flaticon-shuffle: "\f12c";

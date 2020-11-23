@@ -1,0 +1,53 @@
+{% load static %}
+<header class="app-header">
+    <div class="humberger">
+        <span class='app-header__humberger'>
+            <i class='flaticon-open-menu'></i>
+        </span>
+         <p>AS</p>
+    </div>
+    
+
+    <ul class="app-header__menu">
+        <li class="app-header__item">
+            <a href="{% url 'authentication_logout' %}" class="app-header__link">
+            <i style="font-size:32px;margin-right:5px" class="las la-power-off"></i>
+            </a>
+        </li>
+
+        {% comment %} <li class="app-header__item">
+            <a href="" class="app-header__link">
+            <i class="flaticon-envelope"></i>
+            </a>
+        </li>
+
+        <li class="app-header__item">
+            <a href="" class="app-header__link app-header__link-notification">
+            <i class="flaticon-bell"></i>
+            <span class="app-header__link-notification-value">2</span>
+            </a>
+        </li> {% endcomment %}
+    </ul>
+
+    {% if user.is_authenticated %}
+    <div class="app-header__user">
+        <div class="app-header__user-info">
+            <p>{{ user.user.first_name | capfirst }} {{ user.user.last_name | lower }} </p>
+            {% if user.is_super %}
+            <small>super admin</small>
+            {% elif user.is_admin and not user.is_super %}
+            <small>admin</small>
+            {% else %}
+             <small>staff</small>
+            {% endif %}
+        </div>
+        {% comment %} <a href="">
+            
+            <img src="{% if user.user.profile %}{% static 'images/app-content/as-pic.jpeg' %}{% else %}{% static 'images/app-content/default-profile.png' %}{% endif %}" class="app-header__user-pic" alt="User priofile picture">
+            
+        </a> {% endcomment %}
+    </div>
+    {% endif %}
+
+
+</header>

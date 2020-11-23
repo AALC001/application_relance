@@ -1,0 +1,18 @@
+*.pyc
+*~
+/.vscode
+!*__pycache__
+myEnv
+venv
+/.idea
+/.vscode
+__pycache__/
+.DS_store
+.idea
+relance_patient/staticfiles
+relance_patient/media
+
+# django migrations 
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
