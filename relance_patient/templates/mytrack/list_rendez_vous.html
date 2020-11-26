@@ -1,0 +1,59 @@
+{% extends 'master.html' %}
+
+{% block title %}Rendez-Vous{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class='section-block'>
+            <a href="{% url 'mytrack:ajout_rdv' %}" class="button button-gradient add-user"><i class="flaticon-plus-1"></i> Ajouter un rendez-vous</a>
+        </div>
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code patient</th>
+                        {% comment %} <th>Numéro patient</th> {% endcomment %}
+                        <th>le motif du RDV</th>
+                        <th>Date de rendez-vous</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if rdv.count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun rendez-vous n'est enregistré
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for rdv in rdv %}
+                    <tr>   
+
+                        <td>{{ rdv.patient_code }}</td>
+
+                        <td>{{ rdv.motif | upper }}</td>
+
+                        <td>{{ rdv.date_rdv | upper }}</td>
+               
+                        <td class="action">
+
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                             {% comment %}   <input type="hidden" name="index_code" value="{{ index.index_code }}">
+                                <a data-archive-index href="{% url 'mytrack:archive_index' index_code=index.index_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a> 
+                                <a data-edit-index href="{% url 'mytrack:edit_index' index_code=index.index_code %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                <a data-delete-index href="" class="button button-small button-ouline-danger"><i class="flaticon-trash"></i></a> {% endcomment %}
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+{% endblock content %}

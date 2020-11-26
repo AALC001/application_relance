@@ -22,6 +22,8 @@
 
     {% comment %} Bootstrap {% endcomment %}
     <link rel="stylesheet" href="{% static 'vendors/css/bootstrap-grid.min.css' %}">
+    {% comment %} Bootstrap {% endcomment %}
+    <link rel="stylesheet" href="{% static 'vendors/css/vanillaSelectBox.css' %}">
 
     {% comment %} style {% endcomment %}
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
@@ -83,10 +85,12 @@
     {% comment %} VENDORS {% endcomment %}
     <script src="{% static 'vendors/js/validate.min.js' %}"></script>
     <script src="{% static 'vendors/js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'vendors/js/vanillaSelectBox.js' %}"></script>
     <script src="{% static 'vendors/js/Chart.js/Chart.bundle.min.js' %}"></script>
 
     {% comment %} APP JS {% endcomment %}
-    
+
+    <script src="{% static 'js/mytrack.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

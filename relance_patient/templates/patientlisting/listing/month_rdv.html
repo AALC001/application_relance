@@ -19,6 +19,7 @@
                         <option value="">Sélectionner le rdv</option>
                             <option value="arv">ARV</option>
                             <option value="clinic">CLINIQUE</option>
+                            <option value="virale">CHARGE VIRALE</option>
                     </select>
                 </div>
 
@@ -81,13 +82,18 @@
         </div>
 
         <div class="card">
+        <div class="table-fixed">
+
+        
             <table class="table">
                 <thead>
                     <tr>
                         <th>Code patient</th>
+                        {% comment %}
                         <th>Nom</th>
                         <th>Prénoms</th>
                         <th>Contact</th>
+                        {% endcomment %}
                         <th>Date RDV</th>
                     </tr>
                 </thead>
@@ -103,13 +109,13 @@
                     <tr>
 
                         <td>{{ rdv.patient_code }}</td>
-
+{% comment %}
                         <td>{{ rdv.first_name | upper }}</td>
 
                         <td>{{ rdv.last_name | upper }}</td>
 
                         <td>{{ rdv.contact }}</td>
-
+{% endcomment %}
                         <td>{{ rdv.date_rdv }}</td>                       
                     </tr>
                     {% endfor %}
@@ -117,6 +123,7 @@
                     {% endif %}
                 </tbody>
             </table>
+            </div>
         </div>
 
         <div class="pagination">

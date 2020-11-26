@@ -23,7 +23,7 @@ from dashboard.views import handle_404, handle_500, handle_403
 urlpatterns = [
     path('', include('dashboard.urls')),
     path('api/', include('api.urls')),
-    path('mytrack/', admin.site.urls),
+    path('mytrack/', include('mytrack.urls')),
     path('users/', include('authentication.urls')),
     path('accounts/login/',login_view, name = 'authentication_login'),
     path('accounts/logout/',logout_view, name = 'authentication_logout'),

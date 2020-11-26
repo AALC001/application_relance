@@ -94,7 +94,7 @@ def list_site_relance(request):
     # filtred_relances = {}
     filtred_relances = {'relances': [], 'period': {'start': '', 'end': ''}}
     info = {}
-
+ 
 
     for fiche in fiche_relance:
         if fiche.account.user.site_code == request.user.user.site_code:

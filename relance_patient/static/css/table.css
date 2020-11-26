@@ -2,6 +2,16 @@
     width: 100%;
 }
 
+.table-fixed {
+    overflow-y: auto !important;
+    height: 450px !important;
+}
+  .table-fixed thead th {
+    background: rgb(45, 150, 236);
+    position: sticky !important;
+    top: 0;
+}
+
 .table tr{
     display: flex;
     justify-content: space-between;

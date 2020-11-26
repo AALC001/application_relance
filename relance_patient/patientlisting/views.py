@@ -279,7 +279,7 @@ def missed_RDV(request):
             query = '''
             SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
             FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
-            WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and ob.value_datetime BETWEEN %s and %s and DATEDIFF(ob.value_datetime, NOW())<0 and ABS(DATEDIFF(ob.value_datetime, NOW()))<%s
+            WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and ob.value_datetime BETWEEN %s   and DATEDIFF(ob.value_datetime, NOW())<0 and ABS(DATEDIFF(ob.value_datetime, NOW()))>%s
             ORDER BY ob.value_datetime desc'''
 
             cursor.execute(query, (type_concept, start_date, end_date, missed_limit))
@@ -367,7 +367,6 @@ def missed_RDV(request):
 # version 2
 def list_PVD(request):
     now = dt.date.today()
-    type_lost_patient = [28, 90]
     losted_RDV = []
     type_concept = (5096, 165040)
 
@@ -375,22 +374,13 @@ def list_PVD(request):
         limit = int(request.GET.get('type_losted'))
 
         with connections['sigdep'].cursor() as cursor:
+            query = '''
+            SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
+            FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
+            WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and DATEDIFF(NOW(), ob.value_datetime)<= %s and DATEDIFF(NOW(),ob.value_datetime)>=%s
+            ORDER BY ob.value_datetime desc'''
 
-            if limit == 28:
-
-                query = '''
-                SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
-                FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
-                WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and DATEDIFF(NOW(), ob.value_datetime)>=28 and DATEDIFF(NOW(), ob.value_datetime)<= 90
-                ORDER BY ob.value_datetime desc'''
-            elif limit == 90:
-                query = '''
-                SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
-                FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
-                WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and DATEDIFF(NOW(), ob.value_datetime)>=90
-                ORDER BY ob.value_datetime desc'''
-
-            cursor.execute(query, (type_concept, ))
+            cursor.execute(query, (type_concept,limit, limit))
             row = list(dictfetchall(cursor))
 
         losted_RDV = sorted(row, key=lambda x: x['date_rdv'])
@@ -407,7 +397,7 @@ def list_PVD(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'type_lost_patient': type_lost_patient, 'page_obj': page_obj}
+    context = {'page_obj': page_obj}
     return render(request, 'patientlisting/listing/lost_patient.html', context)
 
 #patient lost

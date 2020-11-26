@@ -1,0 +1,105 @@
+{% extends 'master.html' %}
+
+{% block title %}Formulaires à remplir{% endblock title %}
+
+{% block content %}
+
+    <section class="home-section section-card">
+
+        <div class="card">
+
+        {% comment %} <div class="row">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                </div>
+            </div>
+                <div class="col-9">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            {% lorem 2 b random %}
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                            {% lorem 2 b random %}
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                            {% lorem 2 b random %}
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                            {% lorem 2 b random %}
+                        </div>
+                </div>
+            </div>
+        </div>
+         {% endcomment %}
+
+           <div class="row mt-4">
+<!--                <div class="col-12 col-lg-6 col-md-6 mt-4">-->
+<!--                    <a href="{% url 'patientlisting:pl_upload_patient_file' %}" class="button button-gradient button-listing" data-listing-patient><i class="icon-big flaticon-to-do-list"></i> Liste patient</a>-->
+<!--                </div>-->
+
+                <div class="col-12 col-lg-4 col-md-4">
+                    <a href="{% url 'mytrack:listing_charge_virale' %}" class="button button-gradient button-listing" data-listing-month-rdv><i class="icon-big flaticon-calendar"></i> Charge virale</a>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4">
+                    <a href="{% url 'mytrack:list_index' %}" class="button button-gradient button-listing" data-listing-missed-rdv><i class="icon-big flaticon-calendar"></i> Index testing</a>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4">
+                    <a href="{% url 'mytrack:list_rdv' %}" class="button button-gradient button-listing" data-listing-lost-patient><i class="icon-big flaticon-panel"></i> Rendez-vous</a>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4">
+                    <a href="{% url 'mytrack:is_come' %}" class="button button-gradient button-listing" data-listing-lost-patient><i class="icon-big flaticon-panel"></i> Venue du patient</a>
+                </div>
+            </div>
+
+<!--            <div class="row">-->
+<!--                <div class="col-12 col-lg-6 col-md-6">-->
+<!--                    <a href="{% url 'patientlisting:pl_missed_rdv' %}" class="button button-gradient button-listing" data-listing-missed-rdv><i class="icon-big flaticon-calendar"></i> RDV Manqué</a>-->
+<!--                </div>-->
+<!--            </div>-->
+
+        </div>
+    </section>
+
+    <div class="modal" role="dialog" id="modal-custom-listing">
+        <div class="modal-content">
+            <span class="modal-close"><i class="flaticon-cancel"></i></span>
+            <div class="modal-header">
+                <h2 class="modal-title">Information de l'utilisateur</h2>
+            </div>
+            
+            <div class="modal-body">
+
+                <form action="" class="from-listing-custom">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="start_date">Date début</label>
+                        <input type="datetime" name="start_date" id="start_date" class="form-control" placeholder="Date de début">
+                        <span class="form-error start_date-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end_date">Date Fin</label>
+                        <input type="datetime" name="end_date" id="end_date" class="form-control" placeholder="Date de fin">
+                        <span class="form-error start_date-error"></span>
+                    </div>
+                </form>
+
+            </div>
+
+            {% comment %} <div class="modal-footer">
+               <a href="" class="button button-success"><i class="flaticon-file"></i> Modifier</a>
+               <a href="" class="button button-danger"><i class="flaticon-trash"></i> Supprimer</a>
+            </div> {% endcomment %}
+        </div>
+    </div>
+
+
+{% endblock content %}

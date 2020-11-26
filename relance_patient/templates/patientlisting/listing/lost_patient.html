@@ -14,12 +14,15 @@
             <form method="GET" action="" class="ml-4 d-flex flex-jcb flex-aic">
               <div class="form-group">
                     <label for="type_losted">Type de perdus de vues</label>
+                   {% comment %}
                     <select name="type_losted" id="type_losted" class="form-control">
                         <option value="">Sélectionner le type</option>
                         {% for type_lost in type_lost_patient %}
                             <option value="{{type_lost}}">{{ type_lost }}</option>
                         {% endfor %}
                     </select>
+                    {% endcomment %}
+                    <input type="number" name="type_losted" id="type_losted" class="form-control">
                 </div>
                
                 <div class="form-group ml-4">

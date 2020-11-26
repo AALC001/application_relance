@@ -35,7 +35,7 @@
         </li>
         {% endif %}
 
-        {% if user.is_admin and not user.is_super %}
+        {% if user.is_admin or user.is_staff and not user.is_super %}
         <li class="app-sidebar__item">
             <a href="{% url 'patientlisting:pl_index' %}" class="app-sidebar__link {% if path_name.url_name == "pl_index" or path_name.url_name == "pl_upload_patient_file" or path_name.url_name == "pl_month_rdv" or path_name.url_name == "pl_lost_rdv" or path_name.url_name == "pl_missed_rdv"%}active{% endif %}">
                 <i class="flaticon-list"></i>
@@ -67,6 +67,15 @@
             <a href="{% url 'activite_relance:list_relance' %}" class="app-sidebar__link {% if path_name.url_name == "list_relance" or path_name.url_name == "edit_relance" or path_name.url_name == "add_relance" %}active{% endif %}">
                 <i class="flaticon-diagonal"></i>
                 Relance patient
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.is_staff and not user.is_super and not user.is_admin %}
+        <li class="app-sidebar__item">
+            <a href="{% url 'mytrack:forms' %}" class="app-sidebar__link {% if path_name.url_name == "forms" or path_name.url_name == "add_charge_virale" %}active{% endif %}">
+                <i class="flaticon-diagonal"></i>
+                Formulaires
             </a>
         </li>
         {% endif %}

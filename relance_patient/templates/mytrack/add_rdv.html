@@ -1,0 +1,44 @@
+{% extends 'master.html' %}
+
+{% block title %}Ajout de Rendez-vous{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class="user-section-wrapper">
+        <div class="card">
+            <form action="{% url 'mytrack:ajout_rdv' %}" method="post" class="form-add-rdv">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="patient_code">Code patient</label>
+                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX">
+                    <span class="form-error patient_code-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="motif">Motif de Rendez-vous</label>
+                    <select name="motif" id="motif" class="form-control"  multiple size = "3">
+                        {% for motif in motif %}
+                        <option value="{{motif}}">{{ motif | upper }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="form-error relance_reason-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_rdv">Date de rendez-vous</label>
+                    <input type="date" name="date_rdv" id="date_rdv" class="form-control" placeholder="Date de Rendez-vous" value="YYYY-MM-DD">
+                    <span class="form-error relance_date-error"></span>
+                </div>
+
+                <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
+
+            </form>
+        </div>
+
+        </div>
+    </section>
+
+{% endblock content %}

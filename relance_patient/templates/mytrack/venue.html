@@ -1,0 +1,51 @@
+{% extends 'master.html' %}
+
+{% block title %}Ajout de relance{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class="user-section-wrapper">
+        <div class="card">
+            <form action="{% url 'mytrack:respect_rdv' %}" method="post" class="form-add-relance">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="relance_date">Date de relance</label>
+                    <input type="date" name="relance_date" id="relance_date" class="form-control" placeholder="Date de relance" value="YYYY-MM-DD">
+                    <span class="form-error relance_date-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="patient_code">Code patient</label>
+                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX">
+                    <span class="form-error patient_code-error"></span>
+                </div>
+
+                 <div class="form-group">
+                    <label for="relance_reason">Motif de la relance</label>
+                    <select name="relance_reason" id="relance_reason" class="form-control">
+                        <option value="">Sélection le motif</option>
+                        {% for motif in motifs %}
+                        <option value="{{motif}}">{{ motif | upper }}</option>
+                        {% endfor %}
+                        <option value="other">AUTRES</option>
+                    </select>
+                    <span class="form-error relance_reason-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="respect_comment">Commentaire</label>
+                    <textarea name="respect_comment" id="respect_comment" placeholder="Commentaire" class="form-control"></textarea>
+                    <span class="form-error relance_comment-error"></span>
+                </div>
+                <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
+
+            </form>
+        </div>
+
+        </div>
+    </section>
+
+{% endblock content %}

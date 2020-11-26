@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'mytrack',
+    'mytrack.apps.MytrackConfig',
     'reversion',
     'import_export',
 ]
@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'relance_patient.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BD_APPOINTMENT',
+        'NAME': 'bd_appointment',
         'USER': 'root',
-        'PASSWORD':'mysqlarra01',
+        'PASSWORD':'password',
         'HOST':'127.0.0.1',
         'PORT': 3306,
     },

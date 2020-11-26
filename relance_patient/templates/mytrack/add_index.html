@@ -1,0 +1,74 @@
+{% extends 'master.html' %}
+
+{% block title %}Ajout de contact{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+
+        <div class="user-section-wrapper">
+        <div class="card">
+            <form action="{% url 'mytrack:ajout_contact' %}" method="post" class="form-add-index">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="patient_code">Code patient</label>
+                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX">
+                    <span class="form-error patient_code-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="type_contact">Type Contact</label>
+                    <select name="type_contact" id="type_contact" class="form-control">
+                        <option value="">Sélection le Type Contact</option>
+                        {% for type_contact in type_contact %}
+                        <option value="{{type_contact}}">{{ type_contact | upper }}</option>
+                        {% endfor %}
+                        <option value="other">AUTRES</option>
+                    </select>
+                    <span class="form-error relance_reason-error"></span>
+                </div>
+
+                <div class="form-group hide" data-index-type-other>
+                    <label for="type_contact_other">Précisez le type de Contact</label>
+                    <input type="text" name="type_contact_other" id="type_contact_other" class="form-control" placeholder="Autre type">
+                    <span class="form-error relance_reason_other-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="sexe_contact">Sexe du Contact</label>
+                    <select name="sexe_contact" id="sexe_contact" class="form-control">
+                        <option value="">Sélection le sexe du Contact</option>
+                        {% for sexe_contact in sexe_contact %}
+                        <option value="{{sexe_contact}}">{{ sexe_contact | upper }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="form-error relance_reason-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_naissance">Date de Naissance du Contact</label>
+                    <input type="date" name="date_naissance" id="date_naissance" class="form-control" placeholder="Date de Naissance du Contact" value="YYYY-MM-DD">
+                    <span class="form-error relance_date-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="statut_identification">Statut à l'identification</label>
+                    <select name="statut_identification" id="statut_identification" class="form-control">
+                        <option value="">Sélection le statut du contact à l'identification</option>
+                        {% for statut_identification in statut_identification %}
+                        <option value="{{statut_identification}}">{{ statut_identification | upper }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="form-error relance_reason-error"></span>
+                </div>
+
+                <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
+
+            </form>
+        </div>
+
+        </div>
+    </section>
+
+{% endblock content %}

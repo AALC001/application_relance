@@ -49,6 +49,7 @@ const urlExtractPatientFile = document.querySelector(".form-upload-patient-file 
 
 
 // utilisties ************************************
+
 function redirect(path) {
     window.location = path
 }
@@ -1835,5 +1836,18 @@ if(formMissedListing) {
 }
 
 // END MISSED LISTING
+
+// INDEXTESTING
+const formAddIndex = document.querySelector(".form-add-index")
+const indexTypeContact = document.querySelector(".form-add-index #type_contact")
+const indexTypeContactOther = document.querySelector('.form-add-index [data-index-type-other]')
+
+if(formAddIndex) {
+
+    if(indexTypeContact.value === "other") indexTypeContactOther.classList.remove('hide')
+    indexTypeContact.addEventListener('change', e => e.target.value === 'other' ? indexTypeContactOther.classList.remove('hide') : indexTypeContactOther.classList.add('hide'))
+
+}
+
 
 })
