@@ -8,11 +8,11 @@
 
         <div class="user-section-wrapper">
         <div class="card">
-            <form action="{% url 'mytrack:add_charge_virale' %}" method="post" class="form-add-relance">
+            <form action="{% url 'mytrack:add_charge_virale' %}" method="post" class="form-add-cv">
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <label for="cv_date">Date de relance</label>
+                    <label for="cv_date">Date</label>
                     <input type="date" name="cv_date" id="cv_date" class="form-control" placeholder="Date de relance" value="YYYY-MM-DD">
                     <span class="form-error relance_date-error"></span>
                 </div>

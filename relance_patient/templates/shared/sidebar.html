@@ -35,7 +35,7 @@
         </li>
         {% endif %}
 
-        {% if user.is_admin or user.is_staff and not user.is_super %}
+        {% if user.is_staff and not user.is_super %}
         <li class="app-sidebar__item">
             <a href="{% url 'patientlisting:pl_index' %}" class="app-sidebar__link {% if path_name.url_name == "pl_index" or path_name.url_name == "pl_upload_patient_file" or path_name.url_name == "pl_month_rdv" or path_name.url_name == "pl_lost_rdv" or path_name.url_name == "pl_missed_rdv"%}active{% endif %}">
                 <i class="flaticon-list"></i>
