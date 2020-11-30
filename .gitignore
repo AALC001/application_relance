@@ -1,9 +1,11 @@
 *.pyc
 *~
+*.whl
 /.vscode
 !*__pycache__
 myEnv
 venv
+node_modules
 /.idea
 /.vscode
 __pycache__/
