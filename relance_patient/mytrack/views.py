@@ -37,7 +37,7 @@ def add_charge_virale(request):
     if request.method=="POST":
         form_data = request.POST
         info_charge_virale = {
-            'cv_date': form_data['cv_date'],
+            'cv_date': form_data['relance_date'],
             'code_patient':form_data['patient_code'],
             'result_charge':int(form_data['charge_virale']),
             'comment':form_data['charge_comment'],
@@ -55,8 +55,15 @@ def add_charge_virale(request):
             ChargeVirale.objects.create(account=request.user, info_charge_virale=json.dumps(info_charge))
 
         link = reverse('mytrack:listing_charge_virale')
-
-        return redirect(link)
+        return JsonResponse({
+            'status': 200,
+            'type': 'success',
+            'message': "La relance a été modifiée", 
+            'redirectLink': {
+                'link': link,
+            }, 
+        })
+        # return redirect(link)
         
     return render(request, 'mytrack/add_charge_virale.html')
 
@@ -84,16 +91,16 @@ def respect_rdv(request):
             Respect.objects.create(account=request.user,info_respect_rdv=json.dumps(respect_values))
         
         link = reverse('mytrack:is_come')
-        return redirect(link)
+        # return redirect(link)
 
-        # return JsonResponse({
-        #     'status': 200,
-        #     'type': 'success',
-        #     'message': "La charge virale a été ajoutée", 
-        #     'redirectLink': {
-        #         'link': link,
-        #     }, 
-        # })
+        return JsonResponse({
+            'status': 200,
+            'type': 'success',
+            'message': "La charge virale a été ajoutée", 
+            'redirectLink': {
+                'link': link,
+            }, 
+        })
 
     motifs = ['index testing', 'arv', 'prélèvement cv', 'suivi clinique', 'resultat cv', 'education thérapeutique', 'bilan initial',]
     motifs.sort()
@@ -203,16 +210,16 @@ def add_rdv(request):
 
 
         link = reverse('mytrack:list_rdv')
-        return redirect(link)
+        # return redirect(link)
 
-        # return JsonResponse({
-        #     'status': 200,
-        #     'type': 'success',
-        #     'message': "L'index a été ajoutée", 
-        #     'redirectLink': {
-        #         'link': link,
-        #     }, 
-        # })
+        return JsonResponse({
+            'status': 200,
+            'type': 'success',
+            'message': "L'index a été ajoutée", 
+            'redirectLink': {
+                'link': link,
+            }, 
+        })
 
 
     motif = ['ARV', 'CV', 'ETP',]

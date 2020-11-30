@@ -45,13 +45,7 @@ let VSBoxCounter = function () {
         }
     };
 }();
-let mySelect = new vanillaSelectBox("#motif",
-{
-    translations: { 
-      "all": "Tous", 
-      "items": "items" 
-    }
-});
+
 function vanillaSelectBox(domSelector, options) {
     let self = this;
     this.instanceOffset = VSBoxCounter.set(self);
@@ -83,7 +77,7 @@ function vanillaSelectBox(domSelector, options) {
         translations: { "all": "All", "items": "items","selectAll":"Select All","clearAll":"Clear All"},
         search: true,
         placeHolder: "selectionnez le motif",
-		stayOpen:false,
+        stayOpen:false,
         disableSelectAll: true,
     }
     if (options) {
@@ -111,7 +105,7 @@ function vanillaSelectBox(domSelector, options) {
         if (options.search != undefined) {
             this.search = options.search;
         }
-		if (options.stayOpen != undefined) {
+        if (options.stayOpen != undefined) {
             this.userOptions.stayOpen = options.stayOpen;
         }
         if (options.disableSelectAll != undefined) {
@@ -557,6 +551,13 @@ function vanillaSelectBox(domSelector, options) {
     this.checkUncheckAll();
 
 }
+let mySelect = new vanillaSelectBox("#motif",
+{
+    translations: { 
+      "all": "Tous", 
+      "items": "items" 
+    }
+});
 
 vanillaSelectBox.prototype.disableItems = function (values) {
     let self = this;
