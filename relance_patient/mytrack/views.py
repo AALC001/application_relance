@@ -3,16 +3,16 @@ import secrets
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse, HttpResponse
 from .models import ChargeVirale, Respect, FicheIndex, FicheRdv
-# Create your views here.
+# Create your views here. 
 
-def load_CV(charge_virales:str):
-    return json.loads(charges_virales)
+def load_CV(charge_virales:str) -> list:
+    return json.loads(charge_virales)
 
-def get_not_archive_CV(charges_virales:str):
-    return [cv for cv in charges_virales if not cv['is_archive']]
+def get_not_archive_CV(charge_virales:str) -> list:
+    return [cv for cv in charge_virales if not cv['is_archive']]
 
-def get_archive_CV(charges_virales):
-    return [cv for cv in charges_virales if cv['is_archive']]
+def get_archive_CV(charge_virales) -> list:
+    return [cv for cv in charge_virales if cv['is_archive']]
 
 def list_charge_virale(request):
     cv = ChargeVirale.objects.filter(account=request.user).first()
@@ -27,7 +27,7 @@ def list_is_come(request):
     venue = Respect.objects.filter(account=request.user).first()
     come = []
     if venue:
-        come = json.loads(venue.info_respect_rdv)
+        come = get_not_archive_CV(json.loads(venue.info_respect_rdv))
         
     context = {'come': come}
     return render(request, 'mytrack/list_venue.html', context)
@@ -41,6 +41,7 @@ def add_charge_virale(request):
             'code_patient':form_data['patient_code'],
             'result_charge':int(form_data['charge_virale']),
             'comment':form_data['charge_comment'],
+            'is_archive': False,
         }
         
         charge_virale = ChargeVirale.objects.filter(account=request.user).first()
@@ -75,6 +76,7 @@ def respect_rdv(request):
             'code_patient':form_data['patient_code'],
             'reason':form_data['relance_reason'],
             'comment':form_data['respect_comment'],
+            'is_archive': False,
         }
         print(info_respect)
 
@@ -139,11 +141,12 @@ def add_index(request):
             type_contact = form_data['type_contact_other']
         infos_index ={
         'patient_code' : form_data['patient_code'],
-        'contact_code' : f"{form_data['patient_code']}/{secrets.token_hex(2).upper()}",
+        'contact_code' : f"{form_data['patient_code']}-{secrets.token_hex(2).upper()}",
         'type_contact' : type_contact,
         'sexe_contact' : form_data['sexe_contact'],
         'date_naissance' : form_data['date_naissance'],
         'statut_identification' : form_data['statut_identification'],
+        'is_archive': False,
         }
         
 
@@ -195,6 +198,7 @@ def add_rdv(request):
         'patient_code' : form_data['patient_code'],
         'motif' :', '.join(request.POST.getlist('motif')) ,
         'date_rdv' : form_data['date_rdv'],
+        'is_archive': False,
         }
         account_rdv = FicheRdv.objects.filter(account=request.user).first()
         account_rdv_infos_rdv = []

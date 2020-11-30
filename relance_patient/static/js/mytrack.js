@@ -205,4 +205,21 @@ document.addEventListener("DOMContentLoaded", function(){
                     return false
                     }
                 })}
+
+                document.querySelectorAll(".form-add-cv input").forEach(elment => {
+                    elment.addEventListener("focus", () => {
+                        if(elment.type == "text" || elment.type == "date") {
+                            elment.classList.remove('error')
+                            elment.nextElementSibling.textContent = ""
+                        }
+                    })
+                })
+                document.querySelectorAll(".form-add-rdv input").forEach(elment => {
+                    elment.addEventListener("focus", () => {
+                        if(elment.type == "text" || elment.type == "date") {
+                            elment.classList.remove('error')
+                            elment.nextElementSibling.textContent = ""
+                        }
+                    })
+                })
             })

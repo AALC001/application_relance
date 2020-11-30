@@ -60,7 +60,9 @@
 .app-sidebar__link [class^="flaticon-"]::before, [class*=" flaticon-"]::before, [class^="flaticon-"]::after, [class*=" flaticon-"]::after {
    font-size: 3rem;
 }
-
+.app-sidebar__link .la, .lab, .lad, .lal, .lar, .las{
+    font-size:5rem;
+}
 
 @media screen and (max-width: 875px) {
     .app-sidebar {

@@ -48,7 +48,7 @@
         <li class="app-sidebar__item">
             <a href="{% url 'activite_relance:list_site_relance' %}" class="app-sidebar__link {% if path_name.url_name == "list_site_relance" %}active{% endif %}">
                 <i class="flaticon-diagonal"></i>
-                List relance
+                Liste relance
             </a>
         </li>
         {% endif %}
@@ -74,7 +74,7 @@
         {% if user.is_staff and not user.is_super and not user.is_admin %}
         <li class="app-sidebar__item">
             <a href="{% url 'mytrack:forms' %}" class="app-sidebar__link {% if path_name.url_name == "forms" or path_name.url_name == "add_charge_virale" %}active{% endif %}">
-                <i class="flaticon-diagonal"></i>
+                <i class="lab la-wpforms"></i>
                 Formulaires
             </a>
         </li>

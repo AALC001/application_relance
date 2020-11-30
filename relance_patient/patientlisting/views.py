@@ -279,7 +279,7 @@ def missed_RDV(request):
             query = '''
             SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
             FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
-            WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and ob.value_datetime BETWEEN %s   and DATEDIFF(ob.value_datetime, NOW())<0 and ABS(DATEDIFF(ob.value_datetime, NOW()))>%s
+            WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id in %s and ob.value_datetime BETWEEN %s and %s and DATEDIFF(ob.value_datetime, NOW())<0 and ABS(DATEDIFF(ob.value_datetime, NOW()))<%s
             ORDER BY ob.value_datetime desc'''
 
             cursor.execute(query, (type_concept, start_date, end_date, missed_limit))
