@@ -14,14 +14,14 @@ def get_not_archive_CV(charge_virales:str) -> list:
 def get_archive_CV(charge_virales) -> list:
     return [cv for cv in charge_virales if cv['is_archive']]
 
-def list_charge_virale(request):
-    cv = ChargeVirale.objects.filter(account=request.user).first()
-    charge_virale = []
-    if cv:
-        charge_virale = json.loads(cv.info_charge_virale)
+# def list_charge_virale(request):
+#     cv = ChargeVirale.objects.filter(account=request.user).first()
+#     charge_virale = []
+#     if cv:
+#         charge_virale = json.loads(cv.info_charge_virale)
         
-    context = {'charge_virale': charge_virale}
-    return render(request, 'mytrack/show_list_cv.html', context)
+#     context = {'charge_virale': charge_virale}
+#     return render(request, 'mytrack/show_list_cv.html', context)
 
 def list_is_come(request):
     venue = Respect.objects.filter(account=request.user).first()
@@ -33,40 +33,41 @@ def list_is_come(request):
     return render(request, 'mytrack/list_venue.html', context)
 
 
-def add_charge_virale(request):
-    if request.method=="POST":
-        form_data = request.POST
-        info_charge_virale = {
-            'cv_date': form_data['relance_date'],
-            'code_patient':form_data['patient_code'],
-            'result_charge':int(form_data['charge_virale']),
-            'comment':form_data['charge_comment'],
-            'is_archive': False,
-        }
+# def add_charge_virale(request):
+#     if request.method=="POST":
+#         form_data = request.POST
+#         info_charge_virale = {
+#             'cv_code': secrets.token_hex(8),
+#             'cv_date': form_data['relance_date'],
+#             'code_patient':form_data['patient_code'],
+#             'result_charge':int(form_data['charge_virale']),
+#             'comment':form_data['charge_comment'],
+#             'is_archive': False,
+#         }
         
-        charge_virale = ChargeVirale.objects.filter(account=request.user).first()
-        info_charge = []
-        if charge_virale:
-            info_charge = json.loads(charge_virale.info_charge_virale, encoding="utf-8")
-            info_charge.append(info_charge_virale)
-            charge_virale.info_charge_virale = json.dumps(info_charge)
-            charge_virale.save()
-        else:
-            info_charge.append(info_charge_virale)
-            ChargeVirale.objects.create(account=request.user, info_charge_virale=json.dumps(info_charge))
+#         charge_virale = ChargeVirale.objects.filter(account=request.user).first()
+#         info_charge = []
+#         if charge_virale:
+#             info_charge = json.loads(charge_virale.info_charge_virale, encoding="utf-8")
+#             info_charge.append(info_charge_virale)
+#             charge_virale.info_charge_virale = json.dumps(info_charge)
+#             charge_virale.save()
+#         else:
+#             info_charge.append(info_charge_virale)
+#             ChargeVirale.objects.create(account=request.user, info_charge_virale=json.dumps(info_charge))
 
-        link = reverse('mytrack:listing_charge_virale')
-        return JsonResponse({
-            'status': 200,
-            'type': 'success',
-            'message': "La relance a été modifiée", 
-            'redirectLink': {
-                'link': link,
-            }, 
-        })
-        # return redirect(link)
+#         link = reverse('mytrack:listing_charge_virale')
+#         return JsonResponse({
+#             'status': 200,
+#             'type': 'success',
+#             'message': "La relance a été modifiée", 
+#             'redirectLink': {
+#                 'link': link,
+#             }, 
+#         })
+#         # return redirect(link)
         
-    return render(request, 'mytrack/add_charge_virale.html')
+#     return render(request, 'mytrack/add_charge_virale.html')
 
 def respect_rdv(request):
     if request.method=='POST':
@@ -78,7 +79,6 @@ def respect_rdv(request):
             'comment':form_data['respect_comment'],
             'is_archive': False,
         }
-        print(info_respect)
 
         respect = Respect.objects.filter(account=request.user).first()
         respect_values = []
@@ -113,23 +113,6 @@ def respect_rdv(request):
 
 def show_forms(request):
     return render(request, 'mytrack/index.html')
-
-# Deactivate user
-# def set_came(request):
-#     data = request.POST
-#     date = data['date']
-#     code_patient = data['code_patient']
-#     RDV = json.loads(Rdv.objects.filter(account=request.user).info_rdv)
-#     for rdv in RDV:
-#         if date<rdv['date'] and rdv['code_patient']==code_patient:
-#             return True
-#         else:
-#             return False
-
-#     account.is_active = False
-#     account.save() 
-#     return JsonResponse({'type':'success', 'message': "Le compte de l'utilisateur a été désactivé"})
-
 
 
 #VUES INDEX
@@ -264,3 +247,39 @@ def list_index(request):
     
     context = {'index': index}
     return render(request, 'mytrack/list_contact_index.html', context)
+
+def edit_charge_virale(request, cv_code):
+    cv = ChargeVirale.objects.filter(account=request.user).first()
+    charge_virale = load_CV(cv.info_charge_virale)
+    cur_cv = None
+    print(cv_code)
+
+    if request.method == "POST":
+        data = request.POST
+        cv_code=data["cv_code"]
+        # print(cv_code)
+
+        for cv in charge_virale:
+            if cv['cv_code'] == cv_code:
+                cv['cv_date'] == data['relance_date']
+                cv['code_patient'] == data['patient_code']
+                cv['result_charge'] == data['charge_virale']
+                cv['comment'] == data['charge_comment']
+        cv.info_charge_virale = json.dumps(charge_virale)
+        cv.save()
+        link = reverse('mytrack:listing_charge_virale')
+        return JsonResponse({
+            'status': 200,
+            'type' : 'success',
+            'message' : 'Les informations de charge virale ont été modifiée',
+            'redirectLink' : {
+                'link':link,
+            },
+        })
+    for cv in charge_virale:
+        if cv['cv_code'] == cv_code:
+            cur_cv = cv
+            break
+
+    context = {'charge_virale':cur_cv}
+    return render(request, 'mytrack/edit_cv.html/', context)

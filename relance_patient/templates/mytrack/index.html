@@ -41,9 +41,9 @@
 <!--                    <a href="{% url 'patientlisting:pl_upload_patient_file' %}" class="button button-gradient button-listing" data-listing-patient><i class="icon-big flaticon-to-do-list"></i> Liste patient</a>-->
 <!--                </div>-->
 
-                <div class="col-12 col-lg-4 col-md-4">
+                {% comment %} <div class="col-12 col-lg-4 col-md-4">
                     <a href="{% url 'mytrack:listing_charge_virale' %}" class="button button-gradient button-listing" data-listing-month-rdv><i class="las la-vials"></i> Charge virale</a>
-                </div>
+                </div> {% endcomment %}
 
                 <div class="col-12 col-lg-4 col-md-4">
                     <a href="{% url 'mytrack:list_index' %}" class="button button-gradient button-listing" data-listing-missed-rdv><i class="las la-users"></i> Index testing</a>

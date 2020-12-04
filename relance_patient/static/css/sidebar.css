@@ -61,7 +61,7 @@
    font-size: 3rem;
 }
 .app-sidebar__link .la, .lab, .lad, .lal, .lar, .las{
-    font-size:5rem;
+    font-size:4rem;
 }
 
 @media screen and (max-width: 875px) {

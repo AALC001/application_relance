@@ -109,6 +109,7 @@ def delete(request):
 # Deactivate user
 def set_user_inactive(request):
     data = request.POST
+    print(data)
     account = Account.objects.filter(pk=int(data["user_id"])).first()
     account.is_active = False
     account.save()

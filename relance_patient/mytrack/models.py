@@ -1,4 +1,5 @@
 import datetime
+import json
 #from dateutil import relativedelta
 from django.db import models
 from django.conf import settings
@@ -20,7 +21,7 @@ class ChargeVirale(models.Model):
 
     def __str__(self):
         cv = json.loads(self.info_charge_virale)
-        return str(len(cv))
+        return str(cv)
     
 
 class Respect(models.Model):

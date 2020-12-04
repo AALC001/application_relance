@@ -93,6 +93,22 @@ class ListRDV(APIView):
                     WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id=165040 and MONTH(ob.value_datetime)=%s and YEAR(ob.value_datetime)=%s
                     ORDER BY ob.value_datetime desc"""
 
+# #have to change concept id value
+
+#             elif type_rdv == 'virale':
+#                 if type_listing['type'] == 'interval':
+#                     query = """
+#                     SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
+#                     FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
+#                     WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id=165040 and ob.value_datetime BETWEEN %s and %s
+#                     ORDER BY ob.value_datetime desc"""
+#                 elif type_listing['type'] == 'month':
+#                     query = """
+#                     SELECT pi.identifier as patient_code, pn.family_name as first_name, pn.given_name as last_name, per.gender, per.birthdate, ob.value_datetime as date_rdv, ob.concept_id as reason
+#                     FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
+#                     WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id=165040 and MONTH(ob.value_datetime)=%s and YEAR(ob.value_datetime)=%s
+#                     ORDER BY ob.value_datetime desc"""
+
             if type_listing['type'] == 'interval':
                 start_date = datetime.strptime(type_listing['listingStartDate'], '%Y-%m-%d').date()
                 end_date = datetime.strptime(type_listing['listingEndDate'], '%Y-%m-%d').date()

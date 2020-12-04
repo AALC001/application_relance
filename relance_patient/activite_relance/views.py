@@ -135,7 +135,7 @@ def list_site_relance(request):
 
     return render(request, 'relance_patient/all_relance.html', context)
 
-#affice toute les relances faites par l'utilisateur
+#affiche toute les relances faites par l'utilisateur
 def list_relance(request):
     fiche_relance = FicheRelance.objects.filter(account=request.user).first()
     relances = []
