@@ -24,13 +24,11 @@
                 </div>
 
                  <div class="form-group">
-                    <label for="relance_reason">Motif du rendez-vous</label>
-                    <select name="relance_reason" id="relance_reason" class="form-control">
-                        <option value="">Sélectionnez le motif</option>
-                        {% for motif in motifs %}
+                    <label for="motif">Motif de Rendez-vous</label>
+                    <select name="motif" id="motif" class="form-control"  multiple size = "3">
+                        {% for motif in motif %}
                         <option value="{{motif}}">{{ motif | upper }}</option>
                         {% endfor %}
-                        <option value="other">AUTRES</option>
                     </select>
                     <span class="form-error relance_reason-error"></span>
                 </div>

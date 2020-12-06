@@ -41,10 +41,10 @@
 
                             <form action="" method="POST">
                                 {% csrf_token %}
-                             {% comment %}   <input type="hidden" name="index_code" value="{{ index.index_code }}">
-                                <a data-archive-index href="{% url 'mytrack:archive_index' index_code=index.index_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a> 
-                                <a data-edit-index href="{% url 'mytrack:edit_index' index_code=index.index_code %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
-                                <a data-delete-index href="" class="button button-small button-ouline-danger"><i class="flaticon-trash"></i></a> {% endcomment %}
+                             <input type="hidden" name="code_rdv" value="{{ rdv.code_rdv }}">
+                                {% comment %} <a data-archive-relance href="{% url 'activite_relance:archive_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a> {% endcomment %}
+                                <a data-edit-relance href="{% url 'mytrack:edit_rdv' rdv.code_rdv%}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                {% comment %} <a data-delete-relance href="" class="button button-small button-ouline-danger"><i class="flaticon-trash"></i></a> {% endcomment %}
                             </form>
                         </td>
                     </tr>

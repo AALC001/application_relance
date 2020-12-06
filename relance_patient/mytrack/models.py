@@ -13,15 +13,15 @@ from authentication.models import Account
 from dashboard.models import SiteInfo
 # Create your models here.
 
-class ChargeVirale(models.Model):
-    # code_patient = models.ForeignKey("Patient", 
-    #             on_delete=models.CASCADE, blank=True, null=True, related_name="charge_virale")
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    info_charge_virale = models.TextField()
+# class ChargeVirale(models.Model):
+#     # code_patient = models.ForeignKey("Patient", 
+#     #             on_delete=models.CASCADE, blank=True, null=True, related_name="charge_virale")
+#     account = models.ForeignKey(Account, on_delete=models.CASCADE)
+#     info_charge_virale = models.TextField()
 
-    def __str__(self):
-        cv = json.loads(self.info_charge_virale)
-        return str(cv)
+#     def __str__(self):
+#         cv = json.loads(self.info_charge_virale)
+#         return str(len(cv))
     
 
 class Respect(models.Model):

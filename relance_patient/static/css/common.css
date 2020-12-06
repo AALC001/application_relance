@@ -98,5 +98,5 @@ input {
 [class*=" flaticon-"]::before, 
 [class^="flaticon-"]::after, 
 [class*=" flaticon-"]::after {
-    font-size: 4rem!important;
+    font-size: 3rem!important;
 }
