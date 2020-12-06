@@ -299,7 +299,6 @@ def edit_rdv(request, code_rdv):
     all_rdv=FicheRdv.objects.filter(account=request.user).first()
     list_rdv=json.loads(all_rdv.info_rdv)
     cur_rdv = None
-    print(list_rdv)
     if request.method=="POST":
         data = request.POST
         code_rdv=data['code_rdv']
@@ -308,20 +307,19 @@ def edit_rdv(request, code_rdv):
                 i["patient_code"]=data["patient_code"]
                 i["motif"]=', '.join(data.getlist('motif'))
                 i["date_rdv"]=data["date_rdv"]
-        all_rdv.info_rdv = json.loads(list_rdv)
+        all_rdv.info_rdv = json.dumps(list_rdv)
         all_rdv.save()
 
-        link = reverse('mytrack:list_rdv')
-        return redirect(link) 
+        link = reverse('mytrack:list_rdv') 
 
-        # return JsonResponse({
-        #     'status': 200,
-        #     'type': 'success',
-        #     'message': "L'index a été ajoutée", 
-        #     'redirectLink': {
-        #         'link': link,
-        #     }, 
-        # })
+        return JsonResponse({
+            'status': 200,
+            'type': 'success',
+            'message': "L'index a été ajoutée", 
+            'redirectLink': {
+                'link': link,
+            }, 
+        })
     for rdv in list_rdv:
         if rdv['code_rdv'] == code_rdv:
             cur_rdv = rdv
