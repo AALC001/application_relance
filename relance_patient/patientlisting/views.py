@@ -283,6 +283,7 @@ def missed_RDV(request):
             ORDER BY ob.value_datetime desc'''
 
             cursor.execute(query, (type_concept, start_date, end_date, missed_limit))
+            
             row = list(dictfetchall(cursor))
 
         missed_RDV = sorted(row, key=lambda x: x['date_rdv'])

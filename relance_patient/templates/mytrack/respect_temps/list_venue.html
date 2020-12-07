@@ -68,6 +68,7 @@
                         <th>Date</th>
                         <th>Code patient</th>
                         <th>Motif</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,15 +88,15 @@
 
                         <td>{{ v.reason | upper }}</td>
                         
-                        {% comment %} <td class="action">
+                        <td class="action">
 
                             <form action="" method="POST">
                                 {% csrf_token %}
-                                <input type="hidden" name="relance_code" value="{{ relance.relance_code }}">
-                                <a data-archive-relance href="{% url 'activite_relance:archive_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a>
-                                <a data-edit-relance href="{% url 'activite_relance:edit_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                <input type="hidden" name="code_respect" value="{{ v.code_respect }}">
+                                <a data-edit-relance href="{% url 'mytrack:edit_respect' v.code_respect %}" class="button button-small button-ouline-success"><i class="flaticon-edit"></i></a>
+                                {% comment %} <a data-edit-relance href="{% url 'activite_relance:edit_relance' relance_code=relance.relance_code %}" class="button button-small button-ouline-dark"><i class="flaticon-file-1"></i></a> {% endcomment %}
                             </form>
-                        </td> {% endcomment %}
+                        </td> 
                     </tr>
                     {% endfor %}
 

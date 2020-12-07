@@ -4,6 +4,7 @@ import datetime as dt
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse, HttpResponse
 from .models import Respect, FicheIndex, FicheRdv
+from django.db import connections
 # Create your views here. 
 
 def load_info(info:str) -> list:
@@ -15,14 +16,6 @@ def get_not_archive_info(info:str) -> list:
 def get_archive_info(info) -> list:
     return [data for data in info if data['is_archive']]
 
-# def list_charge_virale(request):
-#     cv = ChargeVirale.objects.filter(account=request.user).first()
-#     charge_virale = []
-#     if cv:
-#         charge_virale = json.loads(cv.info_charge_virale)
-        
-#     context = {'charge_virale': charge_virale}
-#     return render(request, 'mytrack/show_list_cv.html', context)
 
 def list_is_come(request):
     venue = Respect.objects.filter(account=request.user).first()
@@ -34,46 +27,11 @@ def list_is_come(request):
     return render(request, 'mytrack/respect_temps/list_venue.html', context)
 
 
-# def add_charge_virale(request):
-#     if request.method=="POST":
-#         form_data = request.POST
-#         info_charge_virale = {
-#             'cv_code': secrets.token_hex(8),
-#             'cv_date': form_data['relance_date'],
-#             'code_patient':form_data['patient_code'],
-#             'result_charge':int(form_data['charge_virale']),
-#             'comment':form_data['charge_comment'],
-#             'is_archive': False,
-#         }
-        
-#         charge_virale = ChargeVirale.objects.filter(account=request.user).first()
-#         info_charge = []
-#         if charge_virale:
-#             info_charge = json.loads(charge_virale.info_charge_virale, encoding="utf-8")
-#             info_charge.append(info_charge_virale)
-#             charge_virale.info_charge_virale = json.dumps(info_charge)
-#             charge_virale.save()
-#         else:
-#             info_charge.append(info_charge_virale)
-#             ChargeVirale.objects.create(account=request.user, info_charge_virale=json.dumps(info_charge))
-
-#         link = reverse('mytrack:listing_charge_virale')
-#         return JsonResponse({
-#             'status': 200,
-#             'type': 'success',
-#             'message': "La relance a été modifiée", 
-#             'redirectLink': {
-#                 'link': link,
-#             }, 
-#         })
-#         # return redirect(link)
-        
-#     return render(request, 'mytrack/add_charge_virale.html')
-
 def respect_rdv(request):
     if request.method=='POST':
         form_data = request.POST
         info_respect = {
+            'code_respect':secrets.token_hex(8),
             'date':form_data['relance_date'],
             'code_patient':form_data['patient_code'],
             'reason':', '.join(form_data.getlist('motif')),
@@ -119,6 +77,38 @@ def respect_rdv(request):
     context = {'motif':motif}
 
     return render(request, 'mytrack/respect_temps/venue.html', context)
+
+def edit_respect(request, code_respect):
+    respect_json = Respect.objects.filter(account=request.user).first()
+    respect_list = json.loads(respect_json.info_respect_rdv)
+    rest_respect = None
+    if request.method=="POST":
+        data = request.POST
+        print(data)
+        code_respect=data["code_respect"]
+        for respect in respect_list:
+            if code_respect==respect["code_respect"]:
+                respect['date']=data['relance_date']
+                respect['code_patient']=data['patient_code']
+                respect['reason']=', '.join(data.getlist('motif'))
+                respect['comment']=data['respect_comment']
+        respect_json.info_respect_rdv=json.dumps(respect_list)
+        respect_json.save()
+
+        link = reverse('mytrack:is_come')
+        return redirect(link)
+    for respect in respect_list:
+        if code_respect==respect["code_respect"]:
+            rest_respect = respect
+        
+    motif = ['ARV', 'CV', 'ETP',]
+    motif.sort()
+
+    context = {'motif':motif, 'respect':rest_respect}
+
+    return render(request, 'mytrack/respect_temps/edit_respect.html', context)
+
+
 
 
 def show_forms(request):
@@ -188,6 +178,7 @@ def edit_index(request, code_index):
     emp_index = None
     if request.method == "POST":
         data = request.POST
+        print(data)
         code_index = data["code_index"]
         type_contact = data['type_contact']
         if type_contact == 'other':
@@ -349,36 +340,31 @@ def list_rdv(request):
     context = {'rdv': rdv}
     return render(request, 'mytrack/rdv_temps/list_rendez_vous.html', context)
 
-# def edit_charge_virale(request, cv_code):
-#     cv = ChargeVirale.objects.filter(account=request.user).first()
-#     charge_virale = load_info(cv.info_charge_virale)
-#     cur_cv = None
+# def dictfetchall(cursor):
+#     "Return all rows from a cursor as a dict"
+#     columns = [col[0] for col in cursor.description]
 
+#     for row in cursor.fetchall():
+#         yield dict(zip(columns, row))
+
+
+
+# def form(request):
+#     return render(request, "mytrack/test.html")
+
+# def rupture(request):
 #     if request.method == "POST":
-#         data = request.POST
-#         cv_code=data["cv_code"]
-
-#         for cv in charge_virale:
-#             if cv['cv_code'] == cv_code:
-#                 cv['cv_date'] == data['relance_date']
-#                 cv['code_patient'] == data['patient_code']
-#                 cv['result_charge'] == data['charge_virale']
-#                 cv['comment'] == data['charge_comment']
-#         cv.info_charge_virale = json.dumps(charge_virale)
-#         cv.save()
-#         link = reverse('mytrack:listing_charge_virale')
-#         return JsonResponse({
-#             'status': 200,
-#             'type' : 'success',
-#             'message' : 'Les informations de charge virale ont été modifiée',
-#             'redirectLink' : {
-#                 'link':link,
-#             },
-#         })
-#     for cv in charge_virale:
-#         if cv['cv_code'] == cv_code:
-#             cur_cv = cv
-#             break
-
-#     context = {'charge_virale':cur_cv}
-#     return render(request, 'mytrack/edit_cv.html/', context)
+#         cp = request.POST['patient_code']
+#         print(cp)
+#         with connections['sigdep'].cursor() as cursor:
+#             query = '''
+#             SELECT pi.identifier as patient_code, pn.family_name as first_name
+#             FROM patient_identifier as pi,person_name as pn
+#             WHERE pi.person_id = %s
+#             '''
+#             cursor.execute(query,cp)
+#             row = list(dictfetchall(cursor))
+#         var = row[0]
+#         print(var)
+#     link = reverse('mytrack:list_rdv')
+#     return redirect(link)

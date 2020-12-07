@@ -103,11 +103,11 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-    // ADD CHARGE VIRALE
+    // ADD INDEX TESTING
 
-        // const formAddCV=document.querySelector(".form-add-cv")
-        // const formAddCvCrsToken = document.querySelector(".form-add-cv [type='hidden']");
-        // const cvDate=document.querySelector(".form-add-cv #cv_date")
+        // const formAddIndex=document.querySelector(".form-add-cv")
+        // const formAddIndexCrsToken = document.querySelector(".form-add-cv [type='hidden']");
+        // const Index_BDate=document.querySelector(".form-add-cv #cv_date")
         // const cvCodePatient=document.querySelector(".form-add-cv #patient_code")
         // const cvResult=document.querySelector(".form-add-cv #charge_virale")
         // const cvComment=document.querySelector(".form-add-cv #charge_comment")
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function(){
         //                 }
         //             },
         //             resultat:{
-        //                 presence:{message:" est obligatoire !", allowEmpty:false}
+        //                 presence:{message:" est obligatoire !", allowEmpty:false}                            a faire
         //             },
         //             comment:{
         //                 presence:{message:"entrez un commentaire", allowEmpty:true}

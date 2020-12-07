@@ -92,7 +92,6 @@ class ListRDV(APIView):
                     FROM person as per, obs as ob, person_name as pn, patient_identifier as pi
                     WHERE per.person_id=ob.person_id and pn.person_id=per.person_id and per.person_id=pi.patient_id and ob.concept_id=165040 and MONTH(ob.value_datetime)=%s and YEAR(ob.value_datetime)=%s
                     ORDER BY ob.value_datetime desc"""
-
 # #have to change concept id value
 
 #             elif type_rdv == 'virale':

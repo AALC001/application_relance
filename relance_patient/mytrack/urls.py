@@ -6,6 +6,7 @@ urlpatterns = [
     path('',views.show_forms, name='forms'),
     path('respect-rdv/', views.respect_rdv, name="respect_rdv"),
     path('patients-venus/', views.list_is_come, name="is_come"),
+    path('modif-respect/<str:code_respect>/', views.edit_respect, name="edit_respect"),
     path('rendez-vous/', views.add_rdv, name = "ajout_rdv"),
     path('modif-rdv/<str:code_rdv>/',views.edit_rdv, name="edit_rdv"),
     path('list-rdv/', views.list_rdv, name='list_rdv'),

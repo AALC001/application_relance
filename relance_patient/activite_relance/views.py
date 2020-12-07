@@ -197,8 +197,8 @@ def add_relance(request):
         })
 
 
-    motifs = ['index testing', 'arv', 'prélèvement cv', 'suivi clinique', 'resultat cv', 'education thérapeutique', 'bilan initial',]
-    feedback = ['auto transféré', 'transféré', 'injoignable', 'décédé', 'réfus', 'recherche en cours', 'arrêt volontaire', 'retour aux soins', 'promesse de retour']
+    motifs = ['bilan de suivi', 'renouvelement ordonnance', 'prélèvement cv', 'visite de suivi', 'resultat cv', 'ETP', 'bilan initial', 'PCR', 'statut definitif enfant exposé au VIH']
+    feedback = ['RDV confirmé','pas de relance effectuée', 'suivi dans un autre centre de santé', 'injoignable', 'client décédé', 'pas de reponse aux SMS', 'Ne repond pas aux appels', 'refus du RDV', 'RDV reprogrammé']
 
     feedback.sort()
     motifs.sort()

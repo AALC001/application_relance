@@ -1,6 +1,6 @@
 {% extends 'master.html' %}
 
-{% block title %}Venue de patient{% endblock title %}
+{% block title %}Ajout de relance{% endblock title %}
 
 {% block content %}
     
@@ -8,24 +8,26 @@
 
         <div class="user-section-wrapper">
         <div class="card">
-            <form action="{% url 'mytrack:respect_rdv' %}" method="post" class="form-add-relance">
+            <form action="{% url 'mytrack:edit_respect' respect.code_respect %}" method="post" class="form-add-relance">
                 {% csrf_token %}
 
+                <input type="hidden" name="code_respect" value="{{ respect.code_respect }}">
                 <div class="form-group">
                     <label for="relance_date">Date de venue</label>
-                    <input type="date" name="relance_date" id="relance_date" class="form-control" placeholder="Date de relance" value="YYYY-MM-DD">
+                    <input type="date" name="relance_date" id="relance_date" class="form-control" placeholder="Date de relance" value="{{respect.date}}">
                     <span class="form-error relance_date-error"></span>
                 </div>
 
                  <div class="form-group">
                     <label for="patient_code">Code patient</label>
-                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX">
+                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX" value="{{respect.code_patient}}">
                     <span class="form-error patient_code-error"></span>
                 </div>
 
                  <div class="form-group">
                     <label for="motif">Motif de Rendez-vous</label>
                     <select name="motif" id="motif" class="form-control"  multiple size = "3">
+                        <option value="{{respect.reason}}" selected hidden >{{respect.reason}}</option>
                         {% for motif in motif %}
                         <option value="{{motif}}">{{ motif | upper }}</option>
                         {% endfor %}
@@ -35,7 +37,7 @@
 
                 <div class="form-group">
                     <label for="respect_comment">Commentaire</label>
-                    <textarea name="respect_comment" id="respect_comment" placeholder="Commentaire" class="form-control"></textarea>
+                    <textarea name="respect_comment" id="respect_comment" placeholder="Commentaire" class="form-control" value="{{respect.comment}}"></textarea>
                     <span class="form-error relance_comment-error"></span>
                 </div>
                 <button type="submit" class="button button-gradient"><i class="flaticon-floppy-disk"></i> Enregistrer</button>
