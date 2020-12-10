@@ -1,6 +1,6 @@
 import json
 import secrets
-import datetime as dt
+from datetime import datetime as dt
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse, HttpResponse
 from .models import Respect, FicheIndex, FicheRdv
@@ -19,10 +19,17 @@ def get_archive_info(info) -> list:
 
 def list_is_come(request):
     venue = Respect.objects.filter(account=request.user).first()
-    come = []
+    rdv_json = FicheRdv.objects.filter(account=request.user).first()
+    rdv = json.loads(rdv_json.info_rdv)
+    come_list = []
     if venue:
-        come = get_not_archive_info(json.loads(venue.info_respect_rdv))
-        
+        come_list = get_not_archive_info(json.loads(venue.info_respect_rdv))
+    come = sorted(come_list, key=lambda x: x['date_venue'])
+    for i in come:
+        for j in rdv:
+            if i['last_rdv']==j['date_rdv'] and i['code_patient']==j['patient_code'] and i['reason']==j['motif']:
+                i['respect']=j['respect']
+                come[come.index(i)]=i
     context = {'come': come}
     return render(request, 'mytrack/respect_temps/list_venue.html', context)
 
@@ -32,12 +39,29 @@ def respect_rdv(request):
         form_data = request.POST
         info_respect = {
             'code_respect':secrets.token_hex(8),
-            'date':form_data['relance_date'],
+            'last_rdv':form_data['last_rdv'],
+            'date_venue':form_data['date_venue'],
             'code_patient':form_data['patient_code'],
             'reason':', '.join(form_data.getlist('motif')),
             'comment':form_data['respect_comment'],
             'is_archive': False,
         }
+        rdv = FicheRdv.objects.filter(account=request.user).first()
+        list_rdv = json.loads(rdv.info_rdv)
+        for i in list_rdv:
+            if dt.strptime(info_respect["last_rdv"],'%Y-%m-%d').date()==dt.strptime(i["date_rdv"],'%Y-%m-%d').date() and info_respect["code_patient"]==i["patient_code"] and info_respect["reason"]==i["motif"] and i["is_archive"]==False:
+                i["is_archive"]=True
+                i["date_come"]=info_respect["date_venue"]
+                list_rdv[list_rdv.index(i)]=i
+            else:
+                pass
+        for i in list_rdv:
+            if i['is_archive']==True and dt.strptime(i["date_come"],'%Y-%m-%d')<=dt.strptime(i["date_rdv"],'%Y-%m-%d'):
+                i["respect"]=True
+                list_rdv[list_rdv.index(i)]=i
+
+        rdv.info_rdv=json.dumps(list_rdv)
+        rdv.save()
         respect = Respect.objects.filter(account=request.user).first()
         if respect:
             respect_values = json.loads(respect.info_respect_rdv, encoding="utf-8")
@@ -48,16 +72,6 @@ def respect_rdv(request):
             respect_values = []
             respect_values.append(info_respect)
             Respect.objects.create(account=request.user,info_respect_rdv=json.dumps(respect_values))
-        
-        rdv = FicheRdv.objects.filter(account=request.user).first()
-        list_rdv = json.loads(rdv.info_rdv)
-        for i in list_rdv:
-            if dt.datetime.strptime(info_respect["date"],'%Y-%m-%d').date()<=dt.datetime.strptime(i["date_rdv"],'%Y-%m-%d').date() and info_respect["code_patient"]==i["patient_code"] and info_respect["reason"]==i["motif"] and i["is_archive"]==False:
-                i["is_archive"]=True
-                list_rdv[list_rdv.index(i)]=i
-        rdv.info_rdv=json.dumps(list_rdv)
-        rdv.save()
-        print(rdv.info_rdv)
 
         link = reverse('mytrack:is_come')
         return redirect(link)
@@ -82,16 +96,35 @@ def edit_respect(request, code_respect):
     respect_json = Respect.objects.filter(account=request.user).first()
     respect_list = json.loads(respect_json.info_respect_rdv)
     rest_respect = None
+    RDV = FicheRdv.objects.filter(account=request.user).first()
+    list_rdv = json.loads(RDV.info_rdv)
+    ver = None
     if request.method=="POST":
         data = request.POST
-        print(data)
         code_respect=data["code_respect"]
         for respect in respect_list:
             if code_respect==respect["code_respect"]:
-                respect['date']=data['relance_date']
+                respect["last_rdv"]=data["last_rdv"]
                 respect['code_patient']=data['patient_code']
                 respect['reason']=', '.join(data.getlist('motif'))
                 respect['comment']=data['respect_comment']
+                if respect['date_venue']!=data['date_venue']:
+                    respect['date_venue']=data['date_venue']
+                    for i in list_rdv:
+                        if i['patient_code']==respect['code_patient'] and i['motif']==respect['reason'] and dt.strptime(i['date_rdv'],'%Y-%m-%d').date()==dt.strptime(respect['last_rdv'],'%Y-%m-%d' ).date():
+                            i['date_come']=respect['date_venue']
+                            ver = i['date_come']
+                            if i['date_come']<=i['date_rdv']:
+                                i['respect']=True
+                            else:
+                                i['respect']=False
+                            list_rdv[list_rdv.index(i)]=i
+    if ver:
+        RDV.info_rdv=json.dumps(list_rdv)
+        RDV.save()
+        print(RDV.info_rdv)
+                
+        
         respect_json.info_respect_rdv=json.dumps(respect_list)
         respect_json.save()
 
@@ -108,6 +141,17 @@ def edit_respect(request, code_respect):
 
     return render(request, 'mytrack/respect_temps/edit_respect.html', context)
 
+
+def missed_rdv(request):
+    rdv = FicheRdv.objects.filter(account=request.user).first()
+    rdv_list = json.loads(rdv.info_rdv)
+    missed_rdv=[]
+    for i in rdv_list:
+        if i['is_archive']==False and dt.strptime(i['date_rdv'],'%Y-%m-%d').date()<=dt.now().date():
+            missed_rdv.append(i)
+    ordered = sorted(missed_rdv, key=lambda x: x['date_rdv'])
+    context = {'missed_rdv':ordered}
+    return render(request, 'mytrack/rdv_temps/list_missed_rdv.html', context)
 
 
 
@@ -250,6 +294,8 @@ def add_rdv(request):
         'motif' :', '.join(form_data.getlist('motif')) ,
         'date_rdv' : form_data['date_rdv'],
         'is_archive': False,
+        'date_come':'',
+        'respect':False,
         }
         account_rdv = FicheRdv.objects.filter(account=request.user).first()
         account_rdv_infos_rdv = []
@@ -332,12 +378,15 @@ def edit_rdv(request, code_rdv):
 def list_rdv(request):
     fiche_rdv = FicheRdv.objects.filter(account=request.user).first()
     rdv = []
-
+    cur_rdv = []
     if fiche_rdv:
         rdv = json.loads(fiche_rdv.info_rdv)
+    for i in rdv:
+        if i['is_archive']==False:
+            cur_rdv.append(i)
         
-    
-    context = {'rdv': rdv}
+    ordered = sorted(cur_rdv, key=lambda x: x['date_rdv'])
+    context = {'rdv': ordered}
     return render(request, 'mytrack/rdv_temps/list_rendez_vous.html', context)
 
 # def dictfetchall(cursor):

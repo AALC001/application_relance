@@ -12,8 +12,14 @@
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <label for="relance_date">Date de venue</label>
-                    <input type="date" name="relance_date" id="relance_date" class="form-control" placeholder="Date de relance" value="YYYY-MM-DD">
+                    <label for="last_rdv">Ancienne date de rendez-vous</label>
+                    <input type="date" name="last_rdv" id="last_rdv" class="form-control" placeholder="ancienne date de rendez-vous" value="YYYY-MM-DD">
+                    <span class="form-error relance_date-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_venue">Date de venue</label>
+                    <input type="date" name="date_venue" id="date_venue" class="form-control" placeholder="Date de venue du patient" value="YYYY-MM-DD">
                     <span class="form-error relance_date-error"></span>
                 </div>
 

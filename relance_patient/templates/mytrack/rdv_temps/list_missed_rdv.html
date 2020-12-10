@@ -1,0 +1,44 @@
+{% extends 'master.html' %}
+
+{% block title %}RDV manqués{% endblock title %}
+
+{% block content %}
+    
+    <section class="home-section user-section">
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code patient</th>
+                        {% comment %} <th>Numéro patient</th> {% endcomment %}
+                        <th>le motif du RDV</th>
+                        <th>Date de rendez-vous</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if missed_rdv.count == 0 %}
+                        <tr>
+                            <td style="text-align:center">
+                                Aucun rendez-vous n'est enregistré
+                            </td>
+                        </tr>
+                    {% else %}
+                    {% for rdv in missed_rdv %}
+                    <tr>   
+
+                        <td>{{ rdv.patient_code }}</td>
+
+                        <td>{{ rdv.motif | upper }}</td>
+
+                        <td>{{ rdv.date_rdv | upper }}</td>
+               
+                    </tr>
+                    {% endfor %}
+
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+{% endblock content %}

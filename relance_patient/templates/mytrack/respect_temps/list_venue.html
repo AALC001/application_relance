@@ -68,6 +68,7 @@
                         <th>Date</th>
                         <th>Code patient</th>
                         <th>Motif</th>
+                        <th>Respect</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -82,11 +83,17 @@
                     {% for v in come %}
                     <tr>   
 
-                        <td>{{ v.date }}</td>
+                        <td>{{ v.date_venue }}</td>
 
                         <td>{{ v.code_patient | upper }}</td>
 
                         <td>{{ v.reason | upper }}</td>
+                        
+                        {% if v.respect == True %}
+                        <td>Oui</td>
+                        {% else %}
+                        <td>Non</td>
+                        {% endif %}
                         
                         <td class="action">
 

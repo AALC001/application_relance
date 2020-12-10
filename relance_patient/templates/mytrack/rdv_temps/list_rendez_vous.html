@@ -6,8 +6,12 @@
     
     <section class="home-section user-section">
 
-        <div class='section-block'>
+        <div class='section-block__right'>
             <a href="{% url 'mytrack:ajout_rdv' %}" class="button button-gradient add-user"><i class="flaticon-plus-1"></i> Ajouter un rendez-vous</a>
+        </div>
+        <div class="section-block">
+            <a href="{% url 'mytrack:list_missed_rdv' %}" class="button button-gradient"><i class="flaticon-refresh"></i> Rendez-vous manqués</a>
+            {% comment %} <a href="{% url 'activite_relance:export_fiche_relance' %}" class="button button-small button-gradient"><i class="flaticon-share"></i> Exporter</a> {% endcomment %}
         </div>
         <div class="card">
             <table class="table">
@@ -18,6 +22,7 @@
                         <th>le motif du RDV</th>
                         <th>Date de rendez-vous</th>
                         <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +41,7 @@
                         <td>{{ rdv.motif | upper }}</td>
 
                         <td>{{ rdv.date_rdv | upper }}</td>
-               
+                        
                         <td class="action">
 
                             <form action="" method="POST">

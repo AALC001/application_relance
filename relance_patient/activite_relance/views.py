@@ -88,7 +88,7 @@ def get_filtred_relances(relances, *args, **kwargs):
 
 # Liste all cc relance for site admin
 def list_site_relance(request):
-    fiche_relance = FicheRelance.objects.all();
+    fiche_relance = FicheRelance.objects.all()
     site_user_relance = []
     relances = []
     # filtred_relances = {}
