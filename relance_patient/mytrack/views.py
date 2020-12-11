@@ -20,7 +20,8 @@ def get_archive_info(info) -> list:
 def list_is_come(request):
     venue = Respect.objects.filter(account=request.user).first()
     rdv_json = FicheRdv.objects.filter(account=request.user).first()
-    rdv = json.loads(rdv_json.info_rdv)
+    if rdv_json:
+        rdv = json.loads(rdv_json.info_rdv)
     come_list = []
     if venue:
         come_list = get_not_archive_info(json.loads(venue.info_respect_rdv))
@@ -47,14 +48,44 @@ def respect_rdv(request):
             'is_archive': False,
         }
         rdv = FicheRdv.objects.filter(account=request.user).first()
+        dic = None
         list_rdv = json.loads(rdv.info_rdv)
         for i in list_rdv:
             if dt.strptime(info_respect["last_rdv"],'%Y-%m-%d').date()==dt.strptime(i["date_rdv"],'%Y-%m-%d').date() and info_respect["code_patient"]==i["patient_code"] and info_respect["reason"]==i["motif"] and i["is_archive"]==False:
-                i["is_archive"]=True
-                i["date_come"]=info_respect["date_venue"]
-                list_rdv[list_rdv.index(i)]=i
+                dic = i
+                num = list_rdv.index(i)
+        if dic:
+            dic["is_archive"]=True
+            dic["date_come"]=info_respect["date_venue"]
+            list_rdv[num]=dic
+            respect = Respect.objects.filter(account=request.user).first()
+            if respect:
+                respect_values = json.loads(respect.info_respect_rdv, encoding="utf-8")
+                respect_values.append(info_respect)
+                respect.info_respect_rdv = json.dumps(respect_values)
+                respect.save()
             else:
-                pass
+                respect_values = []
+                respect_values.append(info_respect)
+                Respect.objects.create(account=request.user,info_respect_rdv=json.dumps(respect_values))
+        else:
+            return HttpResponse("<h1>Aucun rendez-vous ne correspond</h1>")
+            #     i["is_archive"]=True
+            #     i["date_come"]=info_respect["date_venue"]
+            #     list_rdv[list_rdv.index(i)]=i
+            #     respect = Respect.objects.filter(account=request.user).first()
+            #     if respect:
+            #         respect_values = json.loads(respect.info_respect_rdv, encoding="utf-8")
+            #         respect_values.append(info_respect)
+            #         respect.info_respect_rdv = json.dumps(respect_values)
+            #         respect.save()
+            #     else:
+            #         respect_values = []
+            #         respect_values.append(info_respect)
+            #         Respect.objects.create(account=request.user,info_respect_rdv=json.dumps(respect_values))
+            # else:
+            #     return HttpResponse("<h1>Une erreur est survenue</h1>")
+                
         for i in list_rdv:
             if i['is_archive']==True and dt.strptime(i["date_come"],'%Y-%m-%d')<=dt.strptime(i["date_rdv"],'%Y-%m-%d'):
                 i["respect"]=True
@@ -62,16 +93,16 @@ def respect_rdv(request):
 
         rdv.info_rdv=json.dumps(list_rdv)
         rdv.save()
-        respect = Respect.objects.filter(account=request.user).first()
-        if respect:
-            respect_values = json.loads(respect.info_respect_rdv, encoding="utf-8")
-            respect_values.append(info_respect)
-            respect.info_respect_rdv = json.dumps(respect_values)
-            respect.save()
-        else:
-            respect_values = []
-            respect_values.append(info_respect)
-            Respect.objects.create(account=request.user,info_respect_rdv=json.dumps(respect_values))
+        # respect = Respect.objects.filter(account=request.user).first()
+        # if respect:
+        #     respect_values = json.loads(respect.info_respect_rdv, encoding="utf-8")
+        #     respect_values.append(info_respect)
+        #     respect.info_respect_rdv = json.dumps(respect_values)
+        #     respect.save()
+        # else:
+        #     respect_values = []
+        #     respect_values.append(info_respect)
+        #     Respect.objects.create(account=request.user,info_respect_rdv=json.dumps(respect_values))
 
         link = reverse('mytrack:is_come')
         return redirect(link)

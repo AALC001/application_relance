@@ -13,25 +13,25 @@
 
                 <div class="form-group">
                     <label for="last_rdv">Ancienne date de rendez-vous</label>
-                    <input type="date" name="last_rdv" id="last_rdv" class="form-control" placeholder="ancienne date de rendez-vous" value="YYYY-MM-DD">
+                    <input type="date" name="last_rdv" id="last_rdv" class="form-control" placeholder="ancienne date de rendez-vous" value="YYYY-MM-DD" required>
                     <span class="form-error relance_date-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="date_venue">Date de venue</label>
-                    <input type="date" name="date_venue" id="date_venue" class="form-control" placeholder="Date de venue du patient" value="YYYY-MM-DD">
+                    <input type="date" name="date_venue" id="date_venue" class="form-control" placeholder="Date de venue du patient" value="YYYY-MM-DD" required>
                     <span class="form-error relance_date-error"></span>
                 </div>
 
                  <div class="form-group">
                     <label for="patient_code">Code patient</label>
-                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX">
+                    <input type="text" name="patient_code" id="patient_code" class="form-control" placeholder="XXXX/XX/XX/XXXX" required>
                     <span class="form-error patient_code-error"></span>
                 </div>
 
                  <div class="form-group">
                     <label for="motif">Motif de Rendez-vous</label>
-                    <select name="motif" id="motif" class="form-control"  multiple size = "3">
+                    <select name="motif" id="motif" class="form-control"  multiple size = "3" required>
                         {% for motif in motif %}
                         <option value="{{motif}}">{{ motif | upper }}</option>
                         {% endfor %}
